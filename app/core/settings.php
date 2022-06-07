@@ -15,7 +15,7 @@ define('SITE_LANG'   , $this->lng);
 // Versión de la aplicación
 define('BEE_NAME'    , $this->framework); // Viene desde Bee.php
 define('BEE_VERSION' , $this->version);   // Viene desde Bee.php
-define('SITE_NAME'   , 'Farnacia');    // Configurado desde Bee.php
+define('SITE_NAME'   , 'Medifer');    // Configurado desde Bee.php
 define('SITE_VERSION', '1.0.0');          // Configurado desde Bee.php
 
 // Ruta base de nuestro proyecto
@@ -68,7 +68,7 @@ define('UPLOADED'   , ASSETS.'uploads/');
 // Set para conexión local o de desarrollo
 define('LDB_ENGINE' , 'mysql');
 define('LDB_HOST'   , 'localhost');
-define('LDB_NAME'   , 'farmacia');
+define('LDB_NAME'   , 'corpm4en_medifer');
 define('LDB_USER'   , 'corpm4en');
 define('LDB_PASS'   , '#$ALDgfs165');
 define('LDB_CHARSET', 'utf8');

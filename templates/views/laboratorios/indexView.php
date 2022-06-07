@@ -1,5 +1,5 @@
-<?php require_once INCLUDES.'inc_header.php'; ?>
-<?php require_once INCLUDES.'inc_navbar.php'; ?>
+<?php require_once INCLUDES . 'inc_header.php'; ?>
+<?php require_once INCLUDES . 'inc_navbar.php'; ?>
 <div class="container py-3">
   <div class="card">
     <div class="card-header d-flex justify-content-between">
@@ -9,11 +9,13 @@
       </div>
     </div>
     <div class="card-body">
-      <div class="wrapper_laboratorios table-responsive">
+      <div class="wrapper_laboratory table-responsive">
 
       </div>
     </div>
   </div>
 </div>
-<?php require_once INCLUDES.'inc_footer.php'; ?>
-<?php require_once VIEWS.'laboratorios/modals/create.php'; ?>
+<?php require_once INCLUDES . 'inc_footer.php'; ?>
+<?php require_once VIEWS . 'laboratorios/modals/create.php'; ?>
+<?php require_once VIEWS . 'laboratorios/modals/read.php'; ?>
+<?php require_once VIEWS . 'laboratorios/modals/update.php'; ?>

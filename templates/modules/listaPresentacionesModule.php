@@ -21,17 +21,6 @@
                 <th scope="row"><?php echo ($i) ; ?></th>
                 <td><?php echo $t->nombre_presentacion; $i++;?></td>
                 <td class="text-center" style="width:15rem;">
-                    <!-- <div class="btn group">
-                        <a href="" class="btn btn-success btn-sm">
-                            <i class="fas fa-eye"></i>
-                        </a>
-                        <a href="" class="btn btn-info btn-sm">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                        </a>
-                        <a href="" class="btn btn-danger btn-sm confirmar">
-                            <i class="fas fa-trash"></i>
-                        </a>
-                    </div> -->
                     <button type="button" data-bs-toggle="modal" data-bs-target="#mdView-presentation" class="btn btn-info btn-sm btnView_presentacion" data-id="<?php echo $t->id_presentacion; ?>">
                         <i class="fas fa-eye"></i>
                     </button>

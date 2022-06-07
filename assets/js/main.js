@@ -1,26 +1,26 @@
-$(document).ready(function() {
+$(document).ready(function () {
 
   // Toast para notificaciones
   //toastr.warning('My name is Inigo Montoya. You killed my father, prepare to die!');
 
   // Waitme
   //$('body').waitMe({effect : 'orbit'});
-  
+
   /**
    * Alerta para confirmar una acción establecida en un link o ruta específica
    */
-  $('body').on('click', '.confirmar', function(e) {
+  $('body').on('click', '.confirmar', function (e) {
     e.preventDefault();
 
     let url = $(this).attr('href'),
-    ok      = confirm('¿Estás seguro?');
+      ok = confirm('¿Estás seguro?');
 
     // Redirección a la URL del enlace
     if (ok) {
       window.location = url;
       return true;
     }
-    
+
     console.log('Acción cancelada.');
     return true;
   });
@@ -41,15 +41,273 @@ $(document).ready(function() {
   ///////// NO REQUERIDOS, SOLO PARA EL PROYECTO DEMO DE GASTOS E INGRESOS
   ////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////
+
   /**
-   * LABORATORIO
-   */
+    * PRESENTACION
+    */
+  // Agregar un presentacion
+  $('#add_presentation_form').on('submit', add_presentation_form);
+  function add_presentation_form(e) {
+    e.preventDefault();
+    var form = $(this),
+      data = new FormData(form.get(0));
+    // AJAX
+    $.ajax({
+      url: 'ajax/add_presentation_form',
+      type: 'post',
+      dataType: 'json',
+      contentType: false,
+      processData: false,
+      cache: false,
+      data: data,
+      beforeSend: function () {
+        form.waitMe();
+      }
+    }).done(function (res) {
+      if (res.status === 201) {
+        toastr.success(res.msg, '¡Bien!');
+        form.trigger('reset');
+        get_presentaciones();
+      } else {
+        toastr.error(res.msg, '¡Upss!');
+      }
+    }).fail(function (err) {
+      toastr.error('Hubo un error en la petición', '¡Upss!');
+    }).always(function () {
+      form.waitMe('hide');
+    })
+  }
+
+  // Cargar información de presentación [VISTA]
+  $('body').on('click', '.btnView_presentacion', btnView_presentacion);
+  function btnView_presentacion(e) {
+    e.preventDefault();
+
+    var button = $(this),
+      id = button.data('id'),
+      action = 'get',
+      hook = 'bee_hook',
+      form_e = $('#view_presentation_form');
+
+    // Cargar la información del registro de la lección
+    $.ajax({
+      url: 'ajax/get_presentation_form',
+      type: 'POST',
+      dataType: 'json',
+      cache: false,
+      data: {
+        hook, action, id
+      },
+      beforeSend: function () {
+        $('.view_presentation_form').waitMe();
+      }
+    }).done(function (res) {
+      if (res.status === 200) {
+        $('[name="nombre_presentation"]', form_e).val(res.data.nombre_presentacion);
+
+      } else {
+        toastr.error(res.msg, '¡Upss!');
+      }
+    }).fail(function (err) {
+      toastr.error('Hubo un error en la petición', '¡Upss!');
+    }).always(function () {
+      $('.view_presentation_form').waitMe('hide');
+    })
+  }
+
+  // Cargar información de presentación [EDITAR]
+  $('body').on('click', '.btnEdit_presentacion', btnEdit_presentacion);
+  function btnEdit_presentacion(e) {
+    e.preventDefault();
+
+    var button = $(this),
+      id = button.data('id'),
+      action = 'get',
+      hook = 'bee_hook',
+      form_e = $('#edit_presentation_form');
+
+    // Cargar la información del registro de la lección
+    $.ajax({
+      url: 'ajax/get_presentation_form',
+      type: 'POST',
+      dataType: 'json',
+      cache: false,
+      data: {
+        hook, action, id
+      },
+      beforeSend: function () {
+        $('.edit_presentation_form').waitMe();
+      }
+    }).done(function (res) {
+      if (res.status === 200) {
+        $('[name="id"]', form_e).val(res.data.id_presentacion);
+        $('[name="nombre_presentation"]', form_e).val(res.data.nombre_presentacion);
+
+      } else {
+        toastr.error(res.msg, '¡Upss!');
+      }
+    }).fail(function (err) {
+      toastr.error('Hubo un error en la petición', '¡Upss!');
+    }).always(function () {
+      $('.edit_presentation_form').waitMe('hide');
+    })
+  }
+
+  // Guardar cambios de presentación
+  $('#edit_presentation_form').on('submit', edit_presentation_form);
+  function edit_presentation_form(e) {
+    e.preventDefault();
+
+    var form = $(this),
+      data = new FormData(form.get(0));
+
+    if (!confirm('¿Estás seguro?')) return;
+
+    // AJAX
+    $.ajax({
+      url: 'ajax/update_presentacion_form',
+      type: 'post',
+      dataType: 'json',
+      contentType: false,
+      processData: false,
+      cache: false,
+      data: data,
+      beforeSend: function () {
+        form.waitMe();
+      }
+    }).done(function (res) {
+      if (res.status === 200) {
+        toastr.success(res.msg, '¡Bien!');
+        get_presentaciones();
+        //form.trigger('reset');
+      } else {
+        toastr.error(res.msg, '¡Upss!');
+      }
+    }).fail(function (err) {
+      toastr.error('Hubo un error en la petición', '¡Upss!');
+    }).always(function () {
+      form.waitMe('hide');
+    })
+  }
+
+  // Borrar una presentación
+  $('body').on('click', '.delete_presentacion', delete_presentacion);
+  function delete_presentacion(e) {
+    var boton = $(this),
+      id = boton.data('id'),
+      hook = 'bee_hook',
+      action = 'delete';
+
+    if (!confirm('¿Estás seguro?')) return false;
+
+    $.ajax({
+      url: 'ajax/delete_presentacion',
+      type: 'POST',
+      dataType: 'json',
+      cache: false,
+      data: {
+        hook, action, id
+      },
+      beforeSend: function () {
+        $('body').waitMe();
+      }
+    }).done(function (res) {
+      if (res.status === 200) {
+        toastr.success(res.msg, '¡Bien!');
+        get_presentaciones();
+      } else {
+        toastr.error(res.msg, '¡Upss!');
+      }
+    }).fail(function (err) {
+      toastr.error('Hubo un error en la petición', '¡Upss!');
+    }).always(function () {
+      $('body').waitMe('hide');
+    })
+  }
+
+
+  $('body').on('click', '#btnUpdate-presentation', function (e) {
+    let select = $('#insertDt-presentacion-producto'),
+      hook = 'bee_hook',
+      action = 'get';
+    console.log('Actualización');
+    // AJAX
+    $.ajax({
+      url: 'ajax/get_selectPresentaciones',
+      type: 'POST',
+      dataType: 'json',
+      cache: false,
+      data: {
+        hook, action
+      },
+      beforeSend: function () {
+        //wrapper.waitMe();
+      }
+    }).done(function (res) {
+      if (res.status === 200) {
+        select.html(res.data);
+        console.log(res);
+
+      } else {
+        toastr.error(res.msg, '¡Upss!');
+        //wrapper.html(res.msg);
+      }
+    }).fail(function (err) {
+      toastr.error('Hubo un error en la petición', '¡Upss!');
+      //wrapper.html('Hubo un error al cargar las lecciones, intenta más tarde.');
+    }).always(function () {
+      //wrapper.waitMe('hide');
+    })
+
+  });
+
   // Cargar lista de presentaciones
+  get_presentaciones();
+  function get_presentaciones() {
+    var wrapper = $('.wrapper_presentaciones'),
+      hook = 'bee_hook',
+      action = 'get';
+
+    if (wrapper.length === 0) {
+      return;
+    }
+
+    $.ajax({
+      url: 'ajax/get_presentaciones',
+      type: 'POST',
+      dataType: 'json',
+      cache: false,
+      data: {
+        hook, action
+      },
+      beforeSend: function () {
+        wrapper.waitMe();
+      }
+    }).done(function (res) {
+      if (res.status === 200) {
+        wrapper.html(res.data);
+
+      } else {
+        toastr.error(res.msg, '¡Upss!');
+        wrapper.html(res.msg);
+      }
+    }).fail(function (err) {
+      toastr.error('Hubo un error en la petición', '¡Upss!');
+      wrapper.html('Hubo un error al cargar las lecciones, intenta más tarde.');
+    }).always(function () {
+      wrapper.waitMe('hide');
+    })
+  }
   get_laboratorios();
+
+  /* LABORATORIO */
+  /**
+   * Cargar lista de laboratorio [CARGA TABLA]
+   */
   function get_laboratorios() {
-    var wrapper = $('.wrapper_laboratorios'),
-    hook        = 'bee_hook',
-    action      = 'get';
+    var wrapper = $('.wrapper_laboratory'),
+      hook = 'bee_hook',
+      action = 'get';
 
     if (wrapper.length === 0) {
       return;
@@ -63,281 +321,130 @@ $(document).ready(function() {
       data: {
         hook, action
       },
-      beforeSend: function() {
+      beforeSend: function () {
         wrapper.waitMe();
       }
-    }).done(function(res) {
-      if(res.status === 200) {
+    }).done(function (res) {
+      if (res.status === 200) {
         wrapper.html(res.data);
 
       } else {
         toastr.error(res.msg, '¡Upss!');
         wrapper.html(res.msg);
       }
-    }).fail(function(err) {
+    }).fail(function (err) {
       toastr.error('Hubo un error en la petición', '¡Upss!');
       wrapper.html('Hubo un error al cargar las laboratorios, intenta más tarde.');
-    }).always(function() {
+    }).always(function () {
       wrapper.waitMe('hide');
     })
   }
-  /**
-   * PRESENTACION
-   */
-  // Agregar un presentacion
-  $('#add_presentation_form').on('submit', add_presentation_form);
-  function add_presentation_form(e) {
+
+  // Agregar un laboratorio
+  $('#add_laboratorio_form').on('submit', add_laboratorio_form);
+  function add_laboratorio_form(e) {
     e.preventDefault();
-
-    var form    = $(this),
-    data        = new FormData(form.get(0));
-
+    var form = $(this),
+      data = new FormData(form.get(0));
     // AJAX
     $.ajax({
-      url: 'ajax/add_presentation_form',
+      url: 'ajax/add_laboratorio_form',
       type: 'post',
       dataType: 'json',
       contentType: false,
       processData: false,
       cache: false,
-      data : data,
-      beforeSend: function() {
+      data: data,
+      beforeSend: function () {
         form.waitMe();
       }
-    }).done(function(res) {
-      if(res.status === 201) {
+    }).done(function (res) {
+      if (res.status === 201) {
         toastr.success(res.msg, '¡Bien!');
         form.trigger('reset');
-        get_presentaciones();
+        get_laboratorios();
       } else {
         toastr.error(res.msg, '¡Upss!');
       }
-    }).fail(function(err) {
+    }).fail(function (err) {
       toastr.error('Hubo un error en la petición', '¡Upss!');
-    }).always(function() {
+    }).always(function () {
       form.waitMe('hide');
     })
   }
 
-  // Cargar información de presentación
-  $('body').on('click', '.btnView_presentacion', btnView_presentacion);
-  function btnView_presentacion(e) {
+  // Cargar información de presentación [VISTA]
+  $('body').on('click', '.btnView_laboratory', btnView_laboratory);
+  function btnView_laboratory(e) {
     e.preventDefault();
 
     var button = $(this),
-    id         = button.data('id'),
-    action     = 'get',
-    hook       = 'bee_hook',
-    form_e     = $('#view_presentation_form');
+      id = button.data('id'),
+      action = 'get',
+      hook = 'bee_hook',
+      form_e = $('#view_laboratory_form');
 
     // Cargar la información del registro de la lección
     $.ajax({
-      url: 'ajax/get_presentation_form',
+      url: 'ajax/get_laboratory_form',
       type: 'POST',
       dataType: 'json',
       cache: false,
       data: {
         hook, action, id
       },
-      beforeSend: function() {
-        $('.view_presentation_form').waitMe();
+      beforeSend: function () {
+        $('.view_laboratory_form').waitMe();
       }
-    }).done(function(res) {
-      if(res.status === 200) {
-        $('[name="id"]', form_e).val(res.data.id_presentacion);
-        $('[name="nombre_presentation"]', form_e).val(res.data.nombre_presentacion);
+    }).done(function (res) {
+      if (res.status === 200) {
+        $('[name="nombre_laboratory"]', form_e).val(res.data.nombre_laboratorio);
 
       } else {
         toastr.error(res.msg, '¡Upss!');
       }
-    }).fail(function(err) {
+    }).fail(function (err) {
       toastr.error('Hubo un error en la petición', '¡Upss!');
-    }).always(function() {
-      $('.view_presentation_form').waitMe('hide');
+    }).always(function () {
+      $('.view_laboratory_form').waitMe('hide');
     })
   }
 
-  // Cargar información de presentación
-  $('body').on('click', '.btnEdit_presentacion', btnEdit_presentacion);
-  function btnEdit_presentacion(e) {
+  // Cargar información de presentación [EDITAR]
+  $('body').on('click', '.btnEdit_laboratory', btnEdit_laboratory);
+  function btnEdit_laboratory(e) {
     e.preventDefault();
 
     var button = $(this),
-    id         = button.data('id'),
-    action     = 'get',
-    hook       = 'bee_hook',
-    form_e     = $('#edit_presentation_form');
+      id = button.data('id'),
+      action = 'get',
+      hook = 'bee_hook',
+      form_e = $('#edit_laboratory_form');
 
     // Cargar la información del registro de la lección
     $.ajax({
-      url: 'ajax/get_presentation_form',
+      url: 'ajax/get_laboratory_form',
       type: 'POST',
       dataType: 'json',
       cache: false,
       data: {
         hook, action, id
       },
-      beforeSend: function() {
-        $('.edit_presentation_form').waitMe();
+      beforeSend: function () {
+        $('.edit_laboratory_form').waitMe();
       }
-    }).done(function(res) {
-      if(res.status === 200) {
-        $('[name="id"]', form_e).val(res.data.id_presentacion);
-        $('[name="nombre_presentation"]', form_e).val(res.data.nombre_presentacion);
+    }).done(function (res) {
+      if (res.status === 200) {
+        $('[name="id"]', form_e).val(res.data.id_laboratorio);
+        $('[name="nombre_laboratory"]', form_e).val(res.data.nombre_laboratorio);
 
       } else {
         toastr.error(res.msg, '¡Upss!');
       }
-    }).fail(function(err) {
+    }).fail(function (err) {
       toastr.error('Hubo un error en la petición', '¡Upss!');
-    }).always(function() {
-      $('.edit_presentation_form').waitMe('hide');
-    })
-  }
-
-  // Guardar cambios de lección
-  $('#edit_presentation_form').on('submit', edit_presentation_form);
-  function edit_presentation_form(e) {
-    e.preventDefault();
-
-    var form = $(this),
-    data     = new FormData(form.get(0));
-
-    if (!confirm('¿Estás seguro?')) return;
-    
-    // AJAX
-    $.ajax({
-      url: 'ajax/update_presentacion_form',
-      type: 'post',
-      dataType: 'json',
-      contentType: false,
-      processData: false,
-      cache: false,
-      data : data,
-      beforeSend: function() {
-        form.waitMe();
-      }
-    }).done(function(res) {
-      if(res.status === 200) {
-        toastr.success(res.msg, '¡Bien!');
-        get_presentaciones();
-        //form.trigger('reset');
-      } else {
-        toastr.error(res.msg, '¡Upss!');
-      }
-    }).fail(function(err) {
-      toastr.error('Hubo un error en la petición', '¡Upss!');
-    }).always(function() {
-      form.waitMe('hide');
-    })
-  }
-
-  // Borrar una lección
-  $('body').on('click', '.delete_presentacion', delete_presentacion);
-  function delete_presentacion(e) {
-    var boton   = $(this),
-    id          = boton.data('id'),
-    hook        = 'bee_hook',
-    action      = 'delete';
-
-    if(!confirm('¿Estás seguro?')) return false;
-
-    $.ajax({
-      url: 'ajax/delete_presentacion',
-      type: 'POST',
-      dataType: 'json',
-      cache: false,
-      data: {
-        hook, action, id
-      },
-      beforeSend: function() {
-        $('body').waitMe();
-      }
-    }).done(function(res) {
-      if(res.status === 200) {
-        toastr.success(res.msg, '¡Bien!');
-        get_presentaciones();
-      } else {
-        toastr.error(res.msg, '¡Upss!');
-      }
-    }).fail(function(err) {
-      toastr.error('Hubo un error en la petición', '¡Upss!');
-    }).always(function() {
-      $('body').waitMe('hide');
-    })
-  }
-
-
-  $('body').on('click', '#btnUpdate-presentation', function(e) {
-    let select = $('#insertDt-presentacion-producto'),
-    hook        = 'bee_hook',
-    action      = 'get';
-    console.log('Actualización');
-    // AJAX
-    $.ajax({
-      url: 'ajax/get_selectPresentaciones',
-      type: 'POST',
-      dataType: 'json',
-      cache: false,
-      data: {
-        hook, action
-      },
-      beforeSend: function() {
-        //wrapper.waitMe();
-      }
-    }).done(function(res) {
-      if(res.status === 200) {
-        select.html(res.data);
-        console.log(res);
-  
-      } else {
-        toastr.error(res.msg, '¡Upss!');
-        //wrapper.html(res.msg);
-      }
-    }).fail(function(err) {
-      toastr.error('Hubo un error en la petición', '¡Upss!');
-      //wrapper.html('Hubo un error al cargar las lecciones, intenta más tarde.');
-    }).always(function() {
-      //wrapper.waitMe('hide');
-    })
-    
-  });
-
-  // Cargar lista de presentaciones
-  get_presentaciones();
-  function get_presentaciones() {
-    var wrapper = $('.wrapper_presentaciones'),
-    hook        = 'bee_hook',
-    action      = 'get';
-  
-    if (wrapper.length === 0) {
-      return;
-    }
-  
-    $.ajax({
-      url: 'ajax/get_presentaciones',
-      type: 'POST',
-      dataType: 'json',
-      cache: false,
-      data: {
-        hook, action
-      },
-      beforeSend: function() {
-        wrapper.waitMe();
-      }
-    }).done(function(res) {
-      if(res.status === 200) {
-        wrapper.html(res.data);
-  
-      } else {
-        toastr.error(res.msg, '¡Upss!');
-        wrapper.html(res.msg);
-      }
-    }).fail(function(err) {
-      toastr.error('Hubo un error en la petición', '¡Upss!');
-      wrapper.html('Hubo un error al cargar las lecciones, intenta más tarde.');
-    }).always(function() {
-      wrapper.waitMe('hide');
+    }).always(function () {
+      $('.edit_laboratory_form').waitMe('hide');
     })
   }
 
@@ -346,8 +453,8 @@ $(document).ready(function() {
   function add_product_form(e) {
     e.preventDefault();
 
-    var form    = $(this),
-    data        = new FormData(form.get(0));
+    var form = $(this),
+      data = new FormData(form.get(0));
 
     // AJAX
     $.ajax({
@@ -357,20 +464,20 @@ $(document).ready(function() {
       contentType: false,
       processData: false,
       cache: false,
-      data : data,
-      beforeSend: function() {
+      data: data,
+      beforeSend: function () {
         form.waitMe();
       }
-    }).done(function(res) {
-      if(res.status === 201) {
+    }).done(function (res) {
+      if (res.status === 201) {
         toastr.success(res.msg, '¡Bien!');
         form.trigger('reset');
       } else {
         toastr.error(res.msg, '¡Upss!');
       }
-    }).fail(function(err) {
+    }).fail(function (err) {
       toastr.error('Hubo un error en la petición', '¡Upss!');
-    }).always(function() {
+    }).always(function () {
       form.waitMe('hide');
     })
   }
@@ -379,8 +486,8 @@ $(document).ready(function() {
   bee_get_movements();
   function bee_get_movements() {
     var wrapper = $('.bee_wrapper_movements'),
-    hook        = 'bee_hook',
-    action      = 'load';
+      hook = 'bee_hook',
+      action = 'load';
 
     if (wrapper.length === 0) {
       return;
@@ -394,20 +501,20 @@ $(document).ready(function() {
       data: {
         hook, action
       },
-      beforeSend: function() {
+      beforeSend: function () {
         wrapper.waitMe();
       }
-    }).done(function(res) {
-      if(res.status === 200) {
+    }).done(function (res) {
+      if (res.status === 200) {
         wrapper.html(res.data);
       } else {
         toastr.error(res.msg, '¡Upss!');
         wrapper.html('');
       }
-    }).fail(function(err) {
+    }).fail(function (err) {
       toastr.error('Hubo un error en la petición', '¡Upss!');
       wrapper.html('');
-    }).always(function() {
+    }).always(function () {
       wrapper.waitMe('hide');
     })
   }
@@ -415,12 +522,12 @@ $(document).ready(function() {
   // Actualizar un movimiento
   $('body').on('dblclick', '.bee_movement', bee_update_movement);
   function bee_update_movement(event) {
-    var li              = $(this),
-    id                  = li.data('id'),
-    hook                = 'bee_hook',
-    action              = 'get',
-    add_form            = $('.bee_add_movement'),
-    wrapper_update_form = $('.bee_wrapper_update_form');
+    var li = $(this),
+      id = li.data('id'),
+      hook = 'bee_hook',
+      action = 'get',
+      add_form = $('.bee_add_movement'),
+      wrapper_update_form = $('.bee_wrapper_update_form');
 
     // AJAX
     $.ajax({
@@ -431,19 +538,19 @@ $(document).ready(function() {
       data: {
         hook, action, id
       },
-      beforeSend: function() {
+      beforeSend: function () {
         wrapper_update_form.waitMe();
       }
-    }).done(function(res) {
-      if(res.status === 200) {
+    }).done(function (res) {
+      if (res.status === 200) {
         wrapper_update_form.html(res.data);
         add_form.hide();
       } else {
         toastr.error(res.msg, '¡Upss!');
       }
-    }).fail(function(err) {
+    }).fail(function (err) {
       toastr.error('Hubo un error en la petición', '¡Upss!');
-    }).always(function() {
+    }).always(function () {
       wrapper_update_form.waitMe('hide');
     })
   }
@@ -452,31 +559,31 @@ $(document).ready(function() {
   function bee_save_movement(event) {
     event.preventDefault();
 
-    var form    = $('.bee_save_movement'),
-    hook        = 'bee_hook',
-    action      = 'update',
-    data        = new FormData(form.get(0)),
-    type        = $('select[name="type"]', form).val(),
-    description = $('input[name="description"]', form).val(),
-    amount      = $('input[name="amount"]', form).val(),
-    add_form            = $('.bee_add_movement');
+    var form = $('.bee_save_movement'),
+      hook = 'bee_hook',
+      action = 'update',
+      data = new FormData(form.get(0)),
+      type = $('select[name="type"]', form).val(),
+      description = $('input[name="description"]', form).val(),
+      amount = $('input[name="amount"]', form).val(),
+      add_form = $('.bee_add_movement');
     data.append('hook', hook);
     data.append('action', action);
 
     // Validar que este seleccionada una opción type
-    if(type === 'none') {
+    if (type === 'none') {
       toastr.error('Selecciona un tipo de movimiento válido', '¡Upss!');
       return;
     }
 
     // Validar description
-    if(description === '' || description.length < 5) {
+    if (description === '' || description.length < 5) {
       toastr.error('Ingresa una descripción válida', '¡Upss!');
       return;
     }
 
     // Validar amount
-    if(amount === '' || amount <= 0) {
+    if (amount === '' || amount <= 0) {
       toastr.error('Ingresa un monto válido', '¡Upss!');
       return;
     }
@@ -489,12 +596,12 @@ $(document).ready(function() {
       contentType: false,
       processData: false,
       cache: false,
-      data : data,
-      beforeSend: function() {
+      data: data,
+      beforeSend: function () {
         form.waitMe();
       }
-    }).done(function(res) {
-      if(res.status === 200) {
+    }).done(function (res) {
+      if (res.status === 200) {
         toastr.success(res.msg, '¡Bien!');
         form.trigger('reset');
         form.remove();
@@ -503,9 +610,9 @@ $(document).ready(function() {
       } else {
         toastr.error(res.msg, '¡Upss!');
       }
-    }).fail(function(err) {
+    }).fail(function (err) {
       toastr.error('Hubo un error en la petición', '¡Upss!');
-    }).always(function() {
+    }).always(function () {
       form.waitMe('hide');
     })
   }
@@ -513,13 +620,13 @@ $(document).ready(function() {
   // Borrar un movimiento
   $('body').on('click', '.bee_delete_movement', bee_delete_movement);
   function bee_delete_movement(event) {
-    var boton   = $(this),
-    id          = boton.data('id'),
-    hook        = 'bee_hook',
-    action      = 'delete',
-    wrapper     = $('.bee_wrapper_movements');
+    var boton = $(this),
+      id = boton.data('id'),
+      hook = 'bee_hook',
+      action = 'delete',
+      wrapper = $('.bee_wrapper_movements');
 
-    if(!confirm('¿Estás seguro?')) return false;
+    if (!confirm('¿Estás seguro?')) return false;
 
     $.ajax({
       url: 'ajax/bee_delete_movement',
@@ -529,19 +636,19 @@ $(document).ready(function() {
       data: {
         hook, action, id
       },
-      beforeSend: function() {
+      beforeSend: function () {
         wrapper.waitMe();
       }
-    }).done(function(res) {
-      if(res.status === 200) {
+    }).done(function (res) {
+      if (res.status === 200) {
         toastr.success(res.msg, 'Bien!');
         bee_get_movements();
       } else {
         toastr.error(res.msg, '¡Upss!');
       }
-    }).fail(function(err) {
+    }).fail(function (err) {
       toastr.error('Hubo un error en la petición', '¡Upss!');
-    }).always(function() {
+    }).always(function () {
       wrapper.waitMe('hide');
     })
   }
@@ -552,9 +659,9 @@ $(document).ready(function() {
     event.preventDefault();
 
     var form = $('.bee_save_options'),
-    data     = new FormData(form.get(0)),
-    hook     = 'bee_hook',
-    action   = 'add';
+      data = new FormData(form.get(0)),
+      hook = 'bee_hook',
+      action = 'add';
     data.append('hook', hook);
     data.append('action', action);
 
@@ -566,20 +673,20 @@ $(document).ready(function() {
       contentType: false,
       processData: false,
       cache: false,
-      data : data,
-      beforeSend: function() {
+      data: data,
+      beforeSend: function () {
         form.waitMe();
       }
-    }).done(function(res) {
-      if(res.status === 200 || res.status === 201) {
+    }).done(function (res) {
+      if (res.status === 200 || res.status === 201) {
         toastr.success(res.msg, '¡Bien!');
         bee_get_movements();
       } else {
         toastr.error(res.msg, '¡Upss!');
       }
-    }).fail(function(err) {
+    }).fail(function (err) {
       toastr.error('Hubo un error en la petición', '¡Upss!');
-    }).always(function() {
+    }).always(function () {
       form.waitMe('hide');
     })
   }

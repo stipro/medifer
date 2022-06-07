@@ -1,16 +1,17 @@
 <!-- Modal -->
-<div class="modal fade" id="mdAdd-laboratory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="mdEdit-laboratory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm">
-    <form id="add_laboratorio_form">
+    <form id="edit_laboratory_form">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">[Nuevo] Laboratorio</h5>
+          <h5 class="modal-title" id="exampleModalLabel">[Editar] Laboratorio</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <div class="col-12">
             <div class="row">
               <div class="col-12">
+                <input type="hidden" name="id" value="" required>
                 <div class="form-group">
                   <label for="nombre_laboratory" class="control-label">Nombre <span class="text-danger">*</span></label>
                   <div class="input-group input-group-sm">

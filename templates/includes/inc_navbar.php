@@ -1,7 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-light">
     <div class="container">
-        <a class="navbar-brand" href="#">
-            Sistema de Punto de Venta para Farmacia
+        <a class="navbar-brand" href="#">Punto de Venta para Farmacia
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -29,6 +28,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Mantenimiento</a>
                 </li>
+                
                 <!-- <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Hola Administrador

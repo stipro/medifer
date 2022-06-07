@@ -1,5 +1,5 @@
-<?php require_once INCLUDES.'inc_header.php'; ?>
-<?php require_once INCLUDES.'inc_navbar.php'; ?>
+<?php require_once INCLUDES . 'inc_header.php'; ?>
+<?php require_once INCLUDES . 'inc_navbar.php'; ?>
 <div class="container py-3">
   <div class="card">
     <div class="card-header d-flex justify-content-between">
@@ -15,7 +15,7 @@
     </div>
   </div>
 </div>
-<?php require_once INCLUDES.'inc_footer.php'; ?>
-<?php require_once VIEWS.'presentaciones/modals/create.php'; ?>
-<?php require_once VIEWS.'presentaciones/modals/read.php'; ?>
-<?php require_once VIEWS.'presentaciones/modals/update.php'; ?>
+<?php require_once INCLUDES . 'inc_footer.php'; ?>
+<?php require_once VIEWS . 'presentaciones/modals/create.php'; ?>
+<?php require_once VIEWS . 'presentaciones/modals/read.php'; ?>
+<?php require_once VIEWS . 'presentaciones/modals/update.php'; ?>

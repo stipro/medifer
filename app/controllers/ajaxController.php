@@ -173,6 +173,51 @@ class ajaxController extends Controller {
     }
   }
 
+  function add_laboratorio_form()
+  {
+    try {
+      $nombre = clean($_POST['nombre_laboratory']);
+
+      /* if(strlen($nombre) < 2){
+        json_output(json_build(400, null, 'El nombre es corto'));
+      } */
+      $data = 
+      [
+        'nombre_laboratorio' => $nombre,
+        'dateCreation'        => now(),
+        'dateUpdate'          => now()
+      ];
+      if(!$id = laboratoriosModel::add(laboratoriosModel::$t1, $data)) {
+        json_output(json_build(400, null, 'Hubo error al guardar el registro'));
+      }
+  
+      // se guardó con éxito
+      $laboratorios = laboratoriosModel::by_id($id);
+      json_output(json_build(201, $laboratorios,'Laboratorio agregado con exito. '));
+      
+    } catch (Exception $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    } catch (PDOException $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    }
+  }
+
+  function get_laboratory_form()
+  {
+    try {
+      $id = clean($_POST['id']);
+      if (!$presentacion = laboratoriosModel::by_id($id)) {
+        throw new PDOException('El Laboratorio no existe en la base de datos.');
+      }
+
+      json_output(json_build(200, $presentacion));
+
+
+    } catch (PDOException $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    }
+  }
+
   function add_product_form()
   {
     try {
