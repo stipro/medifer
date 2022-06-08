@@ -22,8 +22,9 @@ class gruposController extends Controller {
   {
     $data = 
     [
-      'title' => 'Reemplazar título',
-      'msg'   => 'Bienvenido al controlador de "grupos", se ha creado con éxito si ves este mensaje.'
+      'title' => 'Grupos',
+      'msg'   => 'Bienvenido al controlador de "grupos", se ha creado con éxito si ves este mensaje.',
+      'padding' => '0px'
     ];
     
     // Descomentar vista si requerida

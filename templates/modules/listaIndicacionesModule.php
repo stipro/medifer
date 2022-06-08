@@ -19,16 +19,16 @@
             <?php foreach ($d->rows as $t) : ?>
                 <tr>
                     <th scope="row"><?php echo ($i); ?></th>
-                    <td><?php echo $t->nombre_presentacion;
+                    <td><?php echo $t->nombre_indicacion;
                         $i++; ?></td>
                     <td class="text-center" style="width:15rem;">
-                        <button type="button" data-bs-toggle="modal" data-bs-target="#mdView-presentation" class="btn btn-info btn-sm btnView_presentacion" data-id="<?php echo $t->id_presentacion; ?>">
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#mdView-indication" class="btn btn-info btn-sm btnView_indication" data-id="<?php echo $t->id_indicacion; ?>">
                             <i class="fas fa-eye"></i>
                         </button>
-                        <button type="button" data-bs-toggle="modal" data-bs-target="#mdEdit-presentation" class="btn btn-warning btn-sm btnEdit_presentacion" data-id="<?php echo $t->id_presentacion; ?>">
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#mdEdit-indication" class="btn btn-warning btn-sm btnEdit_indication" data-id="<?php echo $t->id_indicacion; ?>">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </button>
-                        <button type="button" class="btn btn-danger btn-sm delete_presentacion" data-id="<?php echo $t->id_presentacion; ?>"><i class="fas fa-trash"></i></button>
+                        <button type="button" class="btn btn-danger btn-sm btnDelete_indication" data-id="<?php echo $t->id_indicacion; ?>"><i class="fas fa-trash"></i></button>
                     </td>
                 </tr>
             <?php endforeach; ?>

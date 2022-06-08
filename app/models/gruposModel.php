@@ -7,7 +7,7 @@
  * Modelo de grupos
  */
 class gruposModel extends Model {
-  public static $t1   = '__tabla___'; // Nombre de la tabla en la base de datos;
+  public static $t1   = 'grupos'; // Nombre de la tabla en la base de datos;
   
   // Nombre de tabla 2 que talvez tenga conexión con registros
   //public static $t2 = '__tabla 2___'; 
@@ -21,14 +21,21 @@ class gruposModel extends Model {
   static function all()
   {
     // Todos los registros
-    $sql = 'SELECT * FROM __tabla___ ORDER BY id DESC';
+    $sql = 'SELECT * FROM grupos ORDER BY id_grupo ASC';
     return ($rows = parent::query($sql)) ? $rows : [];
+  }
+
+  static function all_paginated()
+  {
+    // Todos los registros
+    $sql = 'SELECT * FROM grupos ORDER BY id_grupo ASC';
+    return PaginationHandler::paginate($sql);
   }
 
   static function by_id($id)
   {
     // Un registro con $id
-    $sql = 'SELECT * FROM __tabla___ WHERE id = :id LIMIT 1';
+    $sql = 'SELECT * FROM grupos WHERE id_grupo = :id LIMIT 1';
     return ($rows = parent::query($sql, ['id' => $id])) ? $rows[0] : [];
   }
 }

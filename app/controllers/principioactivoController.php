@@ -4,9 +4,9 @@
  * Plantilla general de controladores
  * Versión 1.0.2
  *
- * Controlador de indicaciones
+ * Controlador de principioactivo
  */
-class indicacionesController extends Controller {
+class principioactivoController extends Controller {
   function __construct()
   {
     // Validación de sesión de usuario, descomentar si requerida
@@ -22,8 +22,8 @@ class indicacionesController extends Controller {
   {
     $data = 
     [
-      'title' => 'Indicaciónes',
-      'msg'   => 'Bienvenido al controlador de "indicaciones", se ha creado con éxito si ves este mensaje.',
+      'title' => 'Principios Activos',
+      'msg'   => 'Bienvenido al controlador de "principioactivo", se ha creado con éxito si ves este mensaje.',
       'padding' => '0px'
     ];
     
