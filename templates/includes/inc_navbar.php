@@ -26,20 +26,25 @@
                     <a class="nav-link" href="#">Usuarios</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Mantenimiento</a>
+                    <a class="nav-link" href="./mantenimiento">Mantenimiento</a>
                 </li>
-                
-                <!-- <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Hola Administrador
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Mantenimiento
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="./presentaciones">Presentaciónes</a></li>
+                        <li><a class="dropdown-item" href="./laboratorios">Laboratórios</a></li>
+                        <li><a class="dropdown-item" href="./grupos">Grupos</a></li>
+                        <li><a class="dropdown-item" href="./principioactivo">Principios Activo</a></li>
+                        <li><a class="dropdown-item" href="./indicaciones">Indicaciónes</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="./productos/">Productos</a></li>
                     </ul>
-                </li> -->
+                </li>
                 <li class="nav-item">
                     <a class="nav-link disabled">Link</a>
                 </li>
@@ -49,13 +54,13 @@
                     Hola <?php echo $_SESSION['user_session']['user']['nombreUsuario_usuario']; ?>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <?php if (!Auth::validate()): ?>
-                        
-                    <?php else: ?>
+                    <?php if (!Auth::validate()) : ?>
+
+                    <?php else : ?>
                         <li><a class="dropdown-item" href="#">Administrar cuenta</a></li>
                         <li><a class="dropdown-item" href="logout">Cerrar sesión</a></li>
                     <?php endif; ?>
-                    
+
                 </ul>
             </div>
         </div>

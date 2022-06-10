@@ -120,7 +120,7 @@ class ajaxController extends Controller
     }
   }
 
-  function get_selectPresentaciones()
+  function getSelect_Presentaciones()
   {
     try {
       /* debug(productosModel::all_paginated());

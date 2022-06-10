@@ -233,7 +233,7 @@ $(document).ready(function () {
     console.log('Actualización');
     // AJAX
     $.ajax({
-      url: 'ajax/get_selectPresentaciones',
+      url: 'ajax/getSelect_Presentaciones',
       type: 'POST',
       dataType: 'json',
       cache: false,
@@ -258,7 +258,6 @@ $(document).ready(function () {
     }).always(function () {
       //wrapper.waitMe('hide');
     })
-
   });
 
   // Cargar lista de presentaciones
@@ -519,7 +518,39 @@ $(document).ready(function () {
       $('body').waitMe('hide');
     })
   }
+  $('body').on('click', '#btnUpdate-laboratory', function (e) {
+    let select = $('#insertDt-presentacion-producto'),
+      hook = 'bee_hook',
+      action = 'get';
+    console.log('Actualización');
+    // AJAX
+    $.ajax({
+      url: 'ajax/getSelect_Presentaciones',
+      type: 'POST',
+      dataType: 'json',
+      cache: false,
+      data: {
+        hook, action
+      },
+      beforeSend: function () {
+        //wrapper.waitMe();
+      }
+    }).done(function (res) {
+      if (res.status === 200) {
+        select.html(res.data);
+        console.log(res);
 
+      } else {
+        toastr.error(res.msg, '¡Upss!');
+        //wrapper.html(res.msg);
+      }
+    }).fail(function (err) {
+      toastr.error('Hubo un error en la petición', '¡Upss!');
+      //wrapper.html('Hubo un error al cargar las lecciones, intenta más tarde.');
+    }).always(function () {
+      //wrapper.waitMe('hide');
+    })
+  });
   /**
    * Grupos
    */
