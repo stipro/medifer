@@ -120,7 +120,7 @@ class ajaxController extends Controller
     }
   }
 
-  function getSelect_Presentaciones()
+  function getSelect_presentacion()
   {
     try {
       /* debug(productosModel::all_paginated());
@@ -153,7 +153,9 @@ class ajaxController extends Controller
       json_output(json_build(400, null, $e->getMessage()));
     }
   }
-
+  /**
+   * LABORATORIO
+   */
   function get_laboratorios()
   {
     try {
@@ -254,6 +256,21 @@ class ajaxController extends Controller
     }
   }
 
+  function getSelect_laboratorio()
+  {
+    try {
+      /* debug(productosModel::all_paginated());
+      die; */
+      $data = get_module('selectLaboratorios', laboratoriosModel::all());
+      json_output(json_build(200, $data));
+    } catch (Exception $e) {
+      json_output(json_build(400, $e->getMessage()));
+    }
+  }
+
+  /**
+   * GRUPO
+   */
   function get_groups()
   {
     try {
@@ -353,6 +370,22 @@ class ajaxController extends Controller
       json_output(json_build(400, null, $e->getMessage()));
     }
   }
+
+  function getSelect_grupo()
+  {
+    try {
+      /* debug(productosModel::all_paginated());
+      die; */
+      $data = get_module('selectGrupos', gruposModel::all());
+      json_output(json_build(200, $data));
+    } catch (Exception $e) {
+      json_output(json_build(400, $e->getMessage()));
+    }
+  }
+
+  /**
+   * PRINCIPIOS ACTIVO
+   */
 
   function get_activePrinciples()
   {
@@ -454,6 +487,21 @@ class ajaxController extends Controller
     }
   }
 
+  function getSelect_activePrinciple()
+  {
+    try {
+      /* debug(productosModel::all_paginated());
+      die; */
+      $data = get_module('selectPrincipiosActivo', principioactivoModel::all());
+      json_output(json_build(200, $data));
+    } catch (Exception $e) {
+      json_output(json_build(400, $e->getMessage()));
+    }
+  }
+
+  /**
+   * INDICACIONES
+   */
   function get_indications()
   {
     try {
@@ -554,6 +602,20 @@ class ajaxController extends Controller
     }
   }
 
+  function getSelect_indication()
+  {
+    try {
+      /* debug(productosModel::all_paginated());
+      die; */
+      $data = get_module('selectIndicaciones', indicacionesModel::all());
+      json_output(json_build(200, $data));
+    } catch (Exception $e) {
+      json_output(json_build(400, $e->getMessage()));
+    }
+  }
+  /**
+   * INDICACIONES
+   */
   function add_product_form()
   {
     try {

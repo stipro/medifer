@@ -45,6 +45,18 @@ $(document).ready(function () {
   /**
     * PRESENTACION
     */
+
+  function select2All() {
+    $('#insertIpt-presentation-product, #insertIpt-laboratory-product, #insertIpt-group-product, #insertIpt-activePrinciple-product, #insertIpt-indication-product').select2({
+      theme: 'bootstrap-5',
+      dropdownParent: $('#mdAdd-product'),
+      width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+      placeholder: $(this).data('placeholder'),
+      allowClear: true
+    });
+  }
+
+  select2All();
   // Agregar un presentacion
   $('#add_presentation_form').on('submit', add_presentation_form);
   function add_presentation_form(e) {
@@ -227,13 +239,13 @@ $(document).ready(function () {
 
 
   $('body').on('click', '#btnUpdate-presentation', function (e) {
-    let select = $('#insertDt-presentacion-producto'),
+    let select = $('#insertIpt-presentation-product'),
       hook = 'bee_hook',
       action = 'get';
     console.log('Actualización');
     // AJAX
     $.ajax({
-      url: 'ajax/getSelect_Presentaciones',
+      url: 'ajax/getSelect_presentacion',
       type: 'POST',
       dataType: 'json',
       cache: false,
@@ -246,8 +258,6 @@ $(document).ready(function () {
     }).done(function (res) {
       if (res.status === 200) {
         select.html(res.data);
-        console.log(res);
-
       } else {
         toastr.error(res.msg, '¡Upss!');
         //wrapper.html(res.msg);
@@ -518,14 +528,15 @@ $(document).ready(function () {
       $('body').waitMe('hide');
     })
   }
+
   $('body').on('click', '#btnUpdate-laboratory', function (e) {
-    let select = $('#insertDt-presentacion-producto'),
+    let select = $('#insertIpt-laboratory-product'),
       hook = 'bee_hook',
       action = 'get';
     console.log('Actualización');
     // AJAX
     $.ajax({
-      url: 'ajax/getSelect_Presentaciones',
+      url: 'ajax/getSelect_laboratorio',
       type: 'POST',
       dataType: 'json',
       cache: false,
@@ -551,6 +562,7 @@ $(document).ready(function () {
       //wrapper.waitMe('hide');
     })
   });
+
   /**
    * Grupos
    */
@@ -747,7 +759,7 @@ $(document).ready(function () {
     if (!confirm('¿Estás seguro?')) return false;
 
     $.ajax({
-      url: 'ajax/delete_laboratorio',
+      url: 'ajax/delete_grupo',
       type: 'POST',
       dataType: 'json',
       cache: false,
@@ -770,6 +782,40 @@ $(document).ready(function () {
       $('body').waitMe('hide');
     })
   }
+
+  $('body').on('click', '#btnUpdate-group', function (e) {
+    let select = $('#insertIpt-group-product'),
+      hook = 'bee_hook',
+      action = 'get';
+    console.log('Actualización');
+    // AJAX
+    $.ajax({
+      url: 'ajax/getSelect_grupo',
+      type: 'POST',
+      dataType: 'json',
+      cache: false,
+      data: {
+        hook, action
+      },
+      beforeSend: function () {
+        //wrapper.waitMe();
+      }
+    }).done(function (res) {
+      if (res.status === 200) {
+        select.html(res.data);
+        console.log(res);
+
+      } else {
+        toastr.error(res.msg, '¡Upss!');
+        //wrapper.html(res.msg);
+      }
+    }).fail(function (err) {
+      toastr.error('Hubo un error en la petición', '¡Upss!');
+      //wrapper.html('Hubo un error al cargar las lecciones, intenta más tarde.');
+    }).always(function () {
+      //wrapper.waitMe('hide');
+    })
+  });
 
   /**
  * Principios Activos
@@ -991,7 +1037,41 @@ $(document).ready(function () {
     })
   }
 
-  /**
+  $('body').on('click', '#btnUpdate-activePrinciple', function (e) {
+    let select = $('#insertIpt-activePrinciple-product'),
+      hook = 'bee_hook',
+      action = 'get';
+    console.log('Actualización');
+    // AJAX
+    $.ajax({
+      url: 'ajax/getSelect_activePrinciple',
+      type: 'POST',
+      dataType: 'json',
+      cache: false,
+      data: {
+        hook, action
+      },
+      beforeSend: function () {
+        //wrapper.waitMe();
+      }
+    }).done(function (res) {
+      if (res.status === 200) {
+        select.html(res.data);
+        console.log(res);
+
+      } else {
+        toastr.error(res.msg, '¡Upss!');
+        //wrapper.html(res.msg);
+      }
+    }).fail(function (err) {
+      toastr.error('Hubo un error en la petición', '¡Upss!');
+      //wrapper.html('Hubo un error al cargar las lecciones, intenta más tarde.');
+    }).always(function () {
+      //wrapper.waitMe('hide');
+    })
+  });
+
+/**
 * Indicaciónes
 */
   get_indications();
@@ -1139,7 +1219,7 @@ $(document).ready(function () {
     })
   }
 
-  // Guardar cambios de Principio Activo
+  // Guardar cambios de Indicación
   $('#edit_indication_form').on('submit', edit_indication_form);
   function edit_indication_form(e) {
     e.preventDefault();
@@ -1176,7 +1256,7 @@ $(document).ready(function () {
     })
   }
 
-  // Borrar una Principio Activo [BORRAR]
+  // Borrar una Indicación [BORRAR]
   $('body').on('click', '.btnDelete_indication', btnDelete_indication);
   function btnDelete_indication(e) {
     var boton = $(this),
@@ -1210,7 +1290,41 @@ $(document).ready(function () {
       $('body').waitMe('hide');
     })
   }
-  
+
+  $('body').on('click', '#btnUpdate-indication', function (e) {
+    let select = $('#insertIpt-indication-product'),
+      hook = 'bee_hook',
+      action = 'get';
+    console.log('Actualización');
+    // AJAX
+    $.ajax({
+      url: 'ajax/getSelect_indication',
+      type: 'POST',
+      dataType: 'json',
+      cache: false,
+      data: {
+        hook, action
+      },
+      beforeSend: function () {
+        //wrapper.waitMe();
+      }
+    }).done(function (res) {
+      if (res.status === 200) {
+        select.html(res.data);
+        console.log(res);
+
+      } else {
+        toastr.error(res.msg, '¡Upss!');
+        //wrapper.html(res.msg);
+      }
+    }).fail(function (err) {
+      toastr.error('Hubo un error en la petición', '¡Upss!');
+      //wrapper.html('Hubo un error al cargar las lecciones, intenta más tarde.');
+    }).always(function () {
+      //wrapper.waitMe('hide');
+    })
+  });
+
   // Agregar un producto
   $('#add_product_form').on('submit', add_product_form);
   function add_product_form(e) {
