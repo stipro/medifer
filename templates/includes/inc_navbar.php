@@ -11,24 +11,32 @@
                     <a class="nav-link active" aria-current="page" href="#">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="./productos/">Productos</a>
+                    <a class="nav-link" href="#">POS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Compras</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Inventario</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">POS</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="#">Ventas</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Usuarios</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Admin Usuarios
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#">Asignaciones</a></li>
+                        <li><a class="dropdown-item" href="#">Permisos</a></li>
+                        <li><a class="dropdown-item" href="#">Usuarios</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="./mantenimiento">Admin Usuarios</a></li>
+                        <li><a class="dropdown-item" href="./productos/">Productos</a></li>
+                    </ul>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="./mantenimiento">Mantenimiento</a>
-                </li>
-
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Mantenimiento
@@ -42,7 +50,8 @@
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="./productos/">Productos</a></li>
+                        <li><a class="dropdown-item" href="./mantenimiento">Mantenimiento</a></li>
+                        <li><a class="dropdown-item" href="./productos">Productos</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
