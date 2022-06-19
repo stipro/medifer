@@ -11,16 +11,16 @@
                     <a class="nav-link active" aria-current="page" href="#">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">POS</a>
+                    <a class="nav-link" href="./pos">POS</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Compras</a>
+                    <a class="nav-link" href="./compras">Compras</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Inventario</a>
+                    <a class="nav-link" href="./inventario">Inventario</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Ventas</a>
+                    <a class="nav-link" href="./ventas">Ventas</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
