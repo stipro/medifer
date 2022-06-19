@@ -19,23 +19,3 @@
 <?php require_once VIEWS . 'productos/modals/create.php'; ?>
 <?php require_once VIEWS . 'productos/modals/read.php'; ?>
 <?php require_once VIEWS . 'productos/modals/update.php'; ?>
-<script>
-  /*   const btnCreate_insert = document.getElementById("add-product");
-  btnCreate_insert.addEventListener("click", (e) => {
-    let form_request = {
-        "action": "getSelec_dni_fullname"
-    }
-    requestTbl_products(form_request);
-    console.log('Se hizo click');
-  });
-  const requestTbl_products = async (request) => {
-    const body = new FormData();
-    body.append("data", JSON.stringify(request));
-    const res = await fetch("./app/controllers/ajaxController.php", {
-        method: "POST",
-        body
-    });
-    const data = await res.json() //await JSON.parse(returned);
-    console.log(data);
-} */
-</script>

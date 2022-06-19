@@ -11,10 +11,11 @@
                     <div class="col-12">
                         <div class="row">
                             <div class="col-8">
+                                <input type="hidden" name="id" value="" required>
                                 <div class="form-group">
-                                    <label for="nombre_producto" class="control-label">Nombre <span class="text-danger">*</span></label>
+                                    <label for="nombre_product" class="control-label">Nombre <span class="text-danger">*</span></label>
                                     <div class="input-group input-group-sm">
-                                        <input type="text" name="nombre_producto" id="nombre_producto" class="form-control form-control-sm" aria-label="Nombre" value="" placeholder="Escribe para buscar..." autofocus required autocomplete="off">
+                                        <input type="text" name="nombre_product" id="nombre_product" class="form-control form-control-sm" aria-label="Nombre" value="" placeholder="Escribe para buscar..." autofocus required autocomplete="off">
                                         <button class="btn btn-outline-secondary form-control-sm" type="button" id="btnAdd-name"><i class="bi bi-cloud-lightning-fill"></i></button>
                                     </div>
                                 </div>
@@ -38,7 +39,7 @@
                                                     <?php else : ?>
 
                                                         <?php foreach (get_tipo_presentaciones() as $tipo) : ?>
-                                                            <?php echo sprintf('<option value="%s">%s</option>', $tipo[0], $tipo[1]); ?>
+                                                            <?php echo sprintf('<option value="%s" data-id="%s">%s</option>', $tipo[0], $tipo[1], $tipo[2]); ?>
                                                         <?php endforeach; ?>
                                                     <?php endif; ?>
                                                 </select>
@@ -60,7 +61,7 @@
                                                         <option value="--0--">--No se obtuvo información--</option>
                                                     <?php else : ?>
                                                         <?php foreach (get_tipo_laboratorios() as $tipo) : ?>
-                                                            <?php echo sprintf('<option value="%s">%s</option>', $tipo[0], $tipo[1]); ?>
+                                                            <?php echo sprintf('<option value="%s" data-id="%s">%s</option>', $tipo[0], $tipo[1], $tipo[2]); ?>
                                                         <?php endforeach; ?>
                                                     <?php endif; ?>
                                                 </select>
@@ -82,7 +83,7 @@
                                                 <option value="--0--">--No se obtuvo información--</option>
                                             <?php else : ?>
                                                 <?php foreach (get_tipo_princiosActivo() as $tipo) : ?>
-                                                    <?php echo sprintf('<option value="%s">%s</option>', $tipo[0], $tipo[1]); ?>
+                                                    <?php echo sprintf('<option value="%s" data-id="%s">%s</option>', $tipo[0], $tipo[1], $tipo[2]); ?>
                                                 <?php endforeach; ?>
                                             <?php endif; ?>
                                         </select>
@@ -102,7 +103,7 @@
                                                 <option value="--0--">--No se obtuvo información--</option>
                                             <?php else : ?>
                                                 <?php foreach (get_tipo_indicaciones() as $tipo) : ?>
-                                                    <?php echo sprintf('<option value="%s">%s</option>', $tipo[0], $tipo[1]); ?>
+                                                    <?php echo sprintf('<option value="%s" data-id="%s">%s</option>', $tipo[0], $tipo[1], $tipo[2]); ?>
                                                 <?php endforeach; ?>
                                             <?php endif; ?>
                                         </select>
@@ -114,7 +115,7 @@
                             <div class="col-4">
                                 <div class="form-group">
                                     <label for="editIpt-barCode-product" class="control-label">Codigo Barras</label>
-                                    <input type="text" name="name" id="editIpt-barCode-product" class="form-control form-control-sm" aria-label="Nombre" value="" autocomplete="off" placeholder="Ingrese Codigo Barras">
+                                    <input type="text" name="barCode_product" id="editIpt-barCode-product" class="form-control form-control-sm" aria-label="Nombre" value="" autocomplete="off" placeholder="Ingrese Codigo Barras">
                                 </div>
                                 <div class="form-group">
                                     <label for="editIpt-group-product" class="control-label">Grupo</label>
@@ -128,7 +129,7 @@
                                                 <option value="--0--">--No se obtuvo información--</option>
                                             <?php else : ?>
                                                 <?php foreach (get_tipo_grupos() as $tipo) : ?>
-                                                    <?php echo sprintf('<option value="%s">%s</option>', $tipo[0], $tipo[1]); ?>
+                                                    <?php echo sprintf('<option value="%s" data-id="%s">%s</option>', $tipo[0], $tipo[1], $tipo[2]); ?>
                                                 <?php endforeach; ?>
                                             <?php endif; ?>
                                         </select>
@@ -139,7 +140,7 @@
                                 <div class="form-group">
                                     <label for="insertIpt-group-producto" class="control-label">Concentración</label>
                                     <div class="input-group input-group-sm">
-                                        <input class="form-control" list="insertDt-concentration-producto" id="insertIpt-concentration-producto" placeholder="Ingrese Concentración" autocomplete="off">
+                                        <input class="form-control" name="concentration_product" id="insertIpt-concentration-producto" placeholder="Ingrese Concentración" autocomplete="off">
                                     </div>
                                 </div>
                             </div>

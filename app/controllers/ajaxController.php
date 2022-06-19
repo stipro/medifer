@@ -685,6 +685,55 @@ class ajaxController extends Controller
     }
   }
 
+  function update_product_form()
+  {
+    try {
+      $id          = (int) $_POST['id']; // id lección
+      $barCode_product      = clean($_POST['barCode_product']);
+      $nombre_product      = clean($_POST['nombre_product']);
+      $concentration_product      = clean($_POST['concentration_product']);
+      $data =
+        [
+          'codigoBarras_producto'      => $barCode_product,
+          'nombre_producto'      => $nombre_product,
+          'concentracion_producto'      => $concentration_product,
+        ];
+
+      if (!productosModel::update(productosModel::$t1, ['id_producto' => $id], $data)) {
+        json_output(json_build(400, null, 'Hubo un error al actualizar la indicación.'));
+      }
+
+      // se guardó con éxito
+      $producto = productosModel::by_id($id);
+      json_output(json_build(200, $producto, 'producto actualizada con éxito.'));
+    } catch (Exception $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    } catch (PDOException $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    }
+  }
+
+  function delete_product()
+  {
+    try {
+      $id_producto = clean($_POST['id']);
+
+      // Validar que exista la presentación
+      if (!$producto = productosModel::by_id($id_producto)) {
+        throw new Exception('No existe la indicación en la base de datos.');
+      }
+
+      if (!productosModel::remove(productosModel::$t1, ['id_producto' => $id_producto], 1)) {
+        json_output(json_build(400, null, 'Hubo un error al borrar la indicación.'));
+      }
+
+      json_output(json_build(200, null, 'indicación borrada con éxito.'));
+    } catch (Exception $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    } catch (PDOException $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    }
+  }
 
   function bee_get_movements()
   {

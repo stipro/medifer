@@ -15,7 +15,7 @@
                                     <label for="nombre_producto" class="control-label">Nombre <span class="text-danger">*</span></label>
                                     <div class="input-group input-group-sm">
                                         <input type="text" name="nombre_producto" id="nombre_producto" class="form-control form-control-sm" aria-label="Nombre" value="" placeholder="Error al cargar ..." autofocus required autocomplete="off" disabled>
-                                        <button class="btn btn-outline-secondary form-control-sm" type="button" id="btnAdd-name"><i class="bi bi-cloud-lightning-fill"></i></button>
+                                        <button class="btn btn-outline-secondary form-control-sm" type="button" id="btnAdd-name" disabled><i class="bi bi-cloud-lightning-fill"></i></button>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -32,10 +32,10 @@
                                                     </select>
                                                 </datalist> -->
                                                 <select class="form-select form-select-sm" id="viewIpt-presentation-product" data-placeholder="Escribe para buscar..." disabled>
-                                                    <option>Error al cargar ...</option>
+                                                    <!-- <option>Error al cargar ...</option> -->
                                                 </select>
-                                                <button class="btn btn-outline-secondary form-control-sm" type="button" id="btnUpdate-presentation"><i class="bi bi-arrow-clockwise"></i></button>
-                                                <button class="btn btn-outline-secondary form-control-sm" type="button" id="mbtnAdd-presentation"><i class="bi bi-plus-lg"></i></button>
+                                                <button class="btn btn-outline-secondary form-control-sm" type="button" id="btnUpdate-presentation" disabled><i class="bi bi-arrow-clockwise"></i></button>
+                                                <button class="btn btn-outline-secondary form-control-sm" type="button" id="mbtnAdd-presentation" disabled><i class="bi bi-plus-lg"></i></button>
                                             </div>
                                         </div>
                                     </div>
@@ -56,8 +56,8 @@
                                                         <?php endforeach; ?>
                                                     <?php endif; ?>
                                                 </select>
-                                                <button class="btn btn-outline-secondary form-control-sm" type="button" id="btnUpdate-laboratory"><i class="bi bi-arrow-clockwise"></i></button>
-                                                <button class="btn btn-outline-secondary form-control-sm" type="button" id="mbtnAdd-laboratory"><i class="bi bi-plus-lg"></i></button>
+                                                <button class="btn btn-outline-secondary form-control-sm" type="button" id="btnUpdate-laboratory" disabled><i class="bi bi-arrow-clockwise"></i></button>
+                                                <button class="btn btn-outline-secondary form-control-sm" type="button" id="mbtnAdd-laboratory" disabled><i class="bi bi-plus-lg"></i></button>
                                             </div>
                                         </div>
                                     </div>
@@ -78,8 +78,8 @@
                                                 <?php endforeach; ?>
                                             <?php endif; ?>
                                         </select>
-                                        <button class="btn btn-outline-secondary form-control-sm" type="button" id="btnUpdate-activePrinciple"><i class="bi bi-arrow-clockwise"></i></button>
-                                        <button class="btn btn-outline-secondary form-control-sm" type="button" id="btnAdd-activePrinciple"><i class="bi bi-plus-lg"></i></button>
+                                        <button class="btn btn-outline-secondary form-control-sm" type="button" id="btnUpdate-activePrinciple" disabled><i class="bi bi-arrow-clockwise"></i></button>
+                                        <button class="btn btn-outline-secondary form-control-sm" type="button" id="btnAdd-activePrinciple" disabled><i class="bi bi-plus-lg"></i></button>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -98,8 +98,8 @@
                                                 <?php endforeach; ?>
                                             <?php endif; ?>
                                         </select>
-                                        <button class="btn btn-outline-secondary form-control-sm" type="button" id="btnUpdate-indication"><i class="bi bi-arrow-clockwise"></i></button>
-                                        <button class="btn btn-outline-secondary form-control-sm" type="button" id="btnAdd-indication"><i class="bi bi-plus-lg"></i></button>
+                                        <button class="btn btn-outline-secondary form-control-sm" type="button" id="btnUpdate-indication" disabled><i class="bi bi-arrow-clockwise"></i></button>
+                                        <button class="btn btn-outline-secondary form-control-sm" type="button" id="btnAdd-indication" disabled><i class="bi bi-plus-lg"></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -124,8 +124,8 @@
                                                 <?php endforeach; ?>
                                             <?php endif; ?>
                                         </select>
-                                        <button class="btn btn-outline-secondary form-control-sm" type="button" id="btnUpdate-group"><i class="bi bi-arrow-clockwise"></i></button>
-                                        <button class="btn btn-outline-secondary form-control-sm" type="button" id="btnAdd-group"><i class="bi bi-plus-lg"></i></button>
+                                        <button class="btn btn-outline-secondary form-control-sm" type="button" id="btnUpdate-group" disabled><i class="bi bi-arrow-clockwise"></i></button>
+                                        <button class="btn btn-outline-secondary form-control-sm" type="button" id="btnAdd-group" disabled><i class="bi bi-plus-lg"></i></button>
                                     </div>
                                 </div>
                                 <div class="form-group">

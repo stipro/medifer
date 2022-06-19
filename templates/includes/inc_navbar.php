@@ -34,7 +34,7 @@
                             <hr class="dropdown-divider">
                         </li>
                         <li><a class="dropdown-item" href="./mantenimiento">Admin Usuarios</a></li>
-                        <li><a class="dropdown-item" href="./productos/">Productos</a></li>
+                        <li><a class="dropdown-item" href="./productos">Productos</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">

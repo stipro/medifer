@@ -43,7 +43,7 @@
               <button type="button" data-bs-toggle="modal" data-bs-target="#mdEdit-product" class="btn btn-warning btn-sm btnEdit_product" data-id="<?php echo $t->id_producto; ?>">
                 <i class="fa-solid fa-pen-to-square"></i>
               </button>
-              <button type="button" class="btn btn-danger btn-sm delete_product" data-id="<?php echo $t->id_producto; ?>"><i class="fas fa-trash"></i></button>
+              <button type="button" class="btn btn-danger btn-sm btnDelete_product" data-id="<?php echo $t->id_producto; ?>"><i class="fas fa-trash"></i></button>
             </td>
           </tr>
         <?php endforeach; ?>

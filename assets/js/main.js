@@ -54,6 +54,13 @@ $(document).ready(function () {
       placeholder: $(this).data('placeholder'),
       allowClear: true
     });
+    $('#editIpt-presentation-product, #editIpt-laboratory-product, #editIpt-group-product, #editIpt-activePrinciple-product, #editIpt-indication-product').select2({
+      theme: 'bootstrap-5',
+      dropdownParent: $('#mdEdit-product'),
+      width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+      placeholder: $(this).data('placeholder'),
+      allowClear: true
+    });
   }
 
   select2All();
@@ -1329,11 +1336,11 @@ $(document).ready(function () {
   $('#add_product_form').on('submit', add_product_form);
   function add_product_form(e) {
     e.preventDefault();
-    val_presentationId = $('#insertIpt-presentation-product').find(':selected').data('id');
-    val_laboratoryId = $('#insertIpt-laboratory-product').find(':selected').data('id');
-    val_groupId = $('#insertIpt-group-product').find(':selected').data('id');
-    val_activePrincipleId = $('#insertIpt-activePrinciple-product').find(':selected').data('id');
-    val_indicationId = $('#insertIpt-indication-product').find(':selected').data('id');
+    let val_presentationId = $('#insertIpt-presentation-product').find(':selected').data('id');
+    let val_laboratoryId = $('#insertIpt-laboratory-product').find(':selected').data('id');
+    let val_groupId = $('#insertIpt-group-product').find(':selected').data('id');
+    let val_activePrincipleId = $('#insertIpt-activePrinciple-product').find(':selected').data('id');
+    let val_indicationId = $('#insertIpt-indication-product').find(':selected').data('id');
     var form = $(this), data = new FormData(form.get(0));
     data.append("presentation_id", JSON.stringify(val_presentationId));
     data.append("laboratory_id", JSON.stringify(val_laboratoryId));
@@ -1434,6 +1441,26 @@ $(document).ready(function () {
         $('[name="nombre_producto"]', form_e).val(nombre_producto);
         let codigoBarras_producto = res.data.codigoBarras_producto ? res.data.codigoBarras_producto : '-';
         $('[name="barCode_product"]', form_e).val(codigoBarras_producto);
+        $('#viewIpt-presentation-product').empty().append($('<option>', {
+          value: res.data.nombre_presentacion,
+          text: res.data.nombre_presentacion
+        }));
+        $('#viewIpt-laboratory-product').empty().append($('<option>', {
+          value: res.data.nombre_laboratorio,
+          text: res.data.nombre_laboratorio
+        }));
+        $('#viewIpt-group-product').empty().append($('<option>', {
+          value: res.data.nombre_grupo,
+          text: res.data.nombre_grupo
+        }));
+        $('#viewIpt-activePrinciple-product').empty().append($('<option>', {
+          value: res.data.nombre_principioActivo,
+          text: res.data.nombre_principioActivo
+        }));
+        $('#viewIpt-indication-product').empty().append($('<option>', {
+          value: res.data.nombre_indicacion,
+          text: res.data.nombre_indicacion
+        }));
         let concentracion_producto = res.data.concentracion_producto ? res.data.concentracion_producto : '-';
         $('[name="concentration_producto"]', form_e).val(concentracion_producto);
 
@@ -1444,6 +1471,139 @@ $(document).ready(function () {
       toastr.error('Hubo un error en la petición', '¡Upss!');
     }).always(function () {
       $('.view_product_form').waitMe('hide');
+    })
+  }
+
+  // Cargar información de producto [EDITAR]
+  $('body').on('click', '.btnEdit_product', btnEdit_product);
+  function btnEdit_product(e) {
+    e.preventDefault();
+
+    var button = $(this),
+      id = button.data('id'),
+      action = 'get',
+      hook = 'bee_hook',
+      form_e = $('#edit_product_form');
+
+    // Cargar la información del registro de la indicación
+    $.ajax({
+      url: 'ajax/get_product_form',
+      type: 'POST',
+      dataType: 'json',
+      cache: false,
+      data: {
+        hook, action, id
+      },
+      beforeSend: function () {
+        $('.edit_product_form').waitMe();
+      }
+    }).done(function (res) {
+      if (res.status === 200) {
+        $('[name="id"]', form_e).val(res.data.id_producto);
+        let nombre_producto = res.data.nombre_producto ? res.data.nombre_producto : '-';
+        $('[name="nombre_product"]', form_e).val(nombre_producto);
+        let codigoBarras_producto = res.data.codigoBarras_producto ? res.data.codigoBarras_producto : '-';
+        $('[name="barCode_product"]', form_e).val(codigoBarras_producto);
+        let concentracion_producto = res.data.concentracion_producto ? res.data.concentracion_producto : '-';
+        $('[name="concentration_product"]', form_e).val(concentracion_producto);
+        $('#editIpt-presentation-product option[data-id=' + res.data.presentacion_id + ']').attr("selected", true);
+        $("#editIpt-presentation-product").trigger('change');
+        $('#editIpt-laboratory-product option[data-id=' + res.data.laboratorio_id + ']').attr("selected", true);
+        $("#editIpt-laboratory-product").trigger('change');
+        $('#editIpt-group-product option[data-id=' + res.data.grupo_id + ']').attr("selected", true);
+        $("#editIpt-group-product").trigger('change');
+        $('#editIpt-activePrinciple-product option[data-id=' + res.data.principioActivo_id + ']').attr("selected", true);
+        $("#editIpt-activePrinciple-product").trigger('change');
+        $('#editIpt-indication-product option[data-id=' + res.data.indicacion_id + ']').attr("selected", true);
+        $("#editIpt-indication-product").trigger('change');
+      } else {
+        toastr.error(res.msg, '¡Upss!');
+      }
+    }).fail(function (err) {
+      toastr.error('Hubo un error en la petición', '¡Upss!');
+    }).always(function () {
+      $('.edit_product_form').waitMe('hide');
+    })
+  }
+
+  // Guardar cambios de producto
+  $('#edit_product_form').on('submit', edit_product_form);
+  function edit_product_form(e) {
+    e.preventDefault();
+    let val_presentationId = $('#editIpt-presentation-product').find(':selected').data('id');
+    let val_laboratoryId = $('#editIpt-laboratory-product').find(':selected').data('id');
+    let val_groupId = $('#editIpt-group-product').find(':selected').data('id');
+    let val_activePrincipleId = $('#editIpt-activePrinciple-product').find(':selected').data('id');
+    let val_indicationId = $('#editIpt-indication-product').find(':selected').data('id');
+
+    let form = $(this), data = new FormData(form.get(0));
+
+    data.append("presentation_id", JSON.stringify(val_presentationId));
+    data.append("laboratory_id", JSON.stringify(val_laboratoryId));
+    data.append("group_id", JSON.stringify(val_groupId));
+    data.append("activePrinciple_id", JSON.stringify(val_activePrincipleId));
+    data.append("indication_id", JSON.stringify(val_indicationId));
+    if (!confirm('¿Estás seguro?')) return;
+
+    // AJAX
+    $.ajax({
+      url: 'ajax/update_product_form',
+      type: 'post',
+      dataType: 'json',
+      contentType: false,
+      processData: false,
+      cache: false,
+      data: data,
+      beforeSend: function () {
+        form.waitMe();
+      }
+    }).done(function (res) {
+      if (res.status === 200) {
+        toastr.success(res.msg, '¡Bien!');
+        get_products();
+        //form.trigger('reset');
+      } else {
+        toastr.error(res.msg, '¡Upss!');
+      }
+    }).fail(function (err) {
+      toastr.error('Hubo un error en la petición', '¡Upss!');
+    }).always(function () {
+      form.waitMe('hide');
+    })
+  }
+
+  // Borrar una Indicación [BORRAR]
+  $('body').on('click', '.btnDelete_product', btnDelete_product);
+  function btnDelete_product(e) {
+    var boton = $(this),
+      id = boton.data('id'),
+      hook = 'bee_hook',
+      action = 'delete';
+
+    if (!confirm('¿Estás seguro?')) return false;
+
+    $.ajax({
+      url: 'ajax/delete_product',
+      type: 'POST',
+      dataType: 'json',
+      cache: false,
+      data: {
+        hook, action, id
+      },
+      beforeSend: function () {
+        $('body').waitMe();
+      }
+    }).done(function (res) {
+      if (res.status === 200) {
+        toastr.success(res.msg, '¡Bien!');
+        get_products();
+      } else {
+        toastr.error(res.msg, '¡Upss!');
+      }
+    }).fail(function (err) {
+      toastr.error('Hubo un error en la petición', '¡Upss!');
+    }).always(function () {
+      $('body').waitMe('hide');
     })
   }
 

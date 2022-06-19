@@ -54,7 +54,28 @@ ORDER BY
   static function by_id($id)
   {
     // Un registro con $id
-    $sql = 'SELECT * FROM productos WHERE id_producto = :id LIMIT 1';
+    $sql = 'SELECT
+      pd.id_producto,
+      pd.codigoBarras_producto,
+      pd.nombre_producto,
+      pd.presentacion_id,
+      pt.nombre_presentacion,
+      pd.laboratorio_id,
+      lb.nombre_laboratorio,
+      pd.grupo_id,
+      gp.nombre_grupo,
+      pd.principioActivo_id,
+      pcAc.nombre_principioActivo,
+      pd.indicacion_id,
+      ic.nombre_indicacion,
+      pd.concentracion_producto
+    FROM productos AS pd
+      LEFT JOIN presentaciones AS pt ON pd.presentacion_id        = pt.id_presentacion
+      LEFT JOIN laboratorios AS lb ON pd.laboratorio_id           = lb.id_laboratorio
+      LEFT JOIN grupos AS gp ON pd.grupo_id                       = gp.id_grupo
+      LEFT JOIN principiosactivo AS pcAc ON pd.principioActivo_id = pcAc.id_principioActivo
+      LEFT JOIN indicaciones AS ic ON pd.indicacion_id            = ic.id_indicacion
+    WHERE id_producto = :id LIMIT 1';
     return ($rows = parent::query($sql, ['id' => $id])) ? $rows[0] : [];
   }
 }
