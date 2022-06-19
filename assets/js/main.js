@@ -1071,9 +1071,9 @@ $(document).ready(function () {
     })
   });
 
-/**
-* Indicaciónes
-*/
+  /**
+  * Indicaciónes
+  */
   get_indications();
   function get_indications() {
     var wrapper = $('.wrapper_indications'),
@@ -1329,10 +1329,17 @@ $(document).ready(function () {
   $('#add_product_form').on('submit', add_product_form);
   function add_product_form(e) {
     e.preventDefault();
-
-    var form = $(this),
-      data = new FormData(form.get(0));
-
+    val_presentationId = $('#insertIpt-presentation-product').find(':selected').data('id');
+    val_laboratoryId = $('#insertIpt-laboratory-product').find(':selected').data('id');
+    val_groupId = $('#insertIpt-group-product').find(':selected').data('id');
+    val_activePrincipleId = $('#insertIpt-activePrinciple-product').find(':selected').data('id');
+    val_indicationId = $('#insertIpt-indication-product').find(':selected').data('id');
+    var form = $(this), data = new FormData(form.get(0));
+    data.append("presentation_id", JSON.stringify(val_presentationId));
+    data.append("laboratory_id", JSON.stringify(val_laboratoryId));
+    data.append("group_id", JSON.stringify(val_groupId));
+    data.append("activePrinciple_id", JSON.stringify(val_activePrincipleId));
+    data.append("indication_id", JSON.stringify(val_indicationId));
     // AJAX
     $.ajax({
       url: 'ajax/add_product_form',
@@ -1348,7 +1355,8 @@ $(document).ready(function () {
     }).done(function (res) {
       if (res.status === 201) {
         toastr.success(res.msg, '¡Bien!');
-        form.trigger('reset');
+        /* form.trigger('reset'); */
+        get_products();
       } else {
         toastr.error(res.msg, '¡Upss!');
       }
@@ -1356,6 +1364,86 @@ $(document).ready(function () {
       toastr.error('Hubo un error en la petición', '¡Upss!');
     }).always(function () {
       form.waitMe('hide');
+    })
+  }
+
+  get_products();
+
+  function get_products() {
+    var wrapper = $('.wrapper_product'),
+      hook = 'bee_hook',
+      action = 'get';
+
+    if (wrapper.length === 0) {
+      return;
+    }
+
+    $.ajax({
+      url: 'ajax/get_products',
+      type: 'POST',
+      dataType: 'json',
+      cache: false,
+      data: {
+        hook, action
+      },
+      beforeSend: function () {
+        wrapper.waitMe();
+      }
+    }).done(function (res) {
+      if (res.status === 200) {
+        wrapper.html(res.data);
+        //select2All();
+      } else {
+        toastr.error(res.msg, '¡Upss!');
+        wrapper.html(res.msg);
+      }
+    }).fail(function (err) {
+      toastr.error('Hubo un error en la petición', '¡Upss!');
+      wrapper.html('Hubo un error al cargar los productos, intenta más tarde.');
+    }).always(function () {
+      wrapper.waitMe('hide');
+    })
+  }
+
+  // Cargar información de presentación [VISTA]
+  $('body').on('click', '.btnView_product', btnView_product);
+  function btnView_product(e) {
+    e.preventDefault();
+
+    var button = $(this),
+      id = button.data('id'),
+      action = 'get',
+      hook = 'bee_hook',
+      form_e = $('#view_product_form');
+
+    // Cargar la información del registro de la lección
+    $.ajax({
+      url: 'ajax/get_product_form',
+      type: 'POST',
+      dataType: 'json',
+      cache: false,
+      data: {
+        hook, action, id
+      },
+      beforeSend: function () {
+        $('.view_product_form').waitMe();
+      }
+    }).done(function (res) {
+      if (res.status === 200) {
+        let nombre_producto = res.data.nombre_producto ? res.data.nombre_producto : '-';
+        $('[name="nombre_producto"]', form_e).val(nombre_producto);
+        let codigoBarras_producto = res.data.codigoBarras_producto ? res.data.codigoBarras_producto : '-';
+        $('[name="barCode_product"]', form_e).val(codigoBarras_producto);
+        let concentracion_producto = res.data.concentracion_producto ? res.data.concentracion_producto : '-';
+        $('[name="concentration_producto"]', form_e).val(concentracion_producto);
+
+      } else {
+        toastr.error(res.msg, '¡Upss!');
+      }
+    }).fail(function (err) {
+      toastr.error('Hubo un error en la petición', '¡Upss!');
+    }).always(function () {
+      $('.view_product_form').waitMe('hide');
     })
   }
 

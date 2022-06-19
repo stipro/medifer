@@ -15,7 +15,7 @@
                   <label for="nombre_laboratory" class="control-label">Nombre <span class="text-danger">*</span></label>
                   <div class="input-group input-group-sm">
                     <input type="text" name="nombre_laboratory" id="nombre_laboratory" class="form-control form-control-sm" aria-label="Nombre" value="" disabled>
-                    <button class="btn btn-outline-secondary form-control-sm" type="button" id="btnAdd-name"><i class="bi bi-cloud-lightning-fill"></i></button>
+                    <button class="btn btn-outline-secondary form-control-sm" type="button" id="btnSearch-name"><i class="bi bi-cloud-lightning-fill"></i></button>
                   </div>
                 </div>
               </div>

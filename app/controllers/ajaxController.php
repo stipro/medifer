@@ -614,19 +614,36 @@ class ajaxController extends Controller
     }
   }
   /**
-   * INDICACIONES
+   * PRODUCTOS
    */
   function add_product_form()
   {
     try {
-      $nombre = clean($_POST['nombre_producto']);
+      $codigoBarra = clean($_POST['barCode_product']);
+      $nombre = clean($_POST['name_product']);      
+      $presentacion_id = clean($_POST['presentation_id']);
+      $laboratorio_id = clean($_POST['laboratory_id']);
+      $grupo_id = clean($_POST['group_id']);
+      $principioActivo_id = clean($_POST['activePrinciple_id']);
+      $indicacion_id = clean($_POST['indication_id']);
+      $concentracion = clean($_POST['concentration-product']);
+      
 
       /* if(strlen($nombre) < 2){
         json_output(json_build(400, null, 'El nombre es corto'));
       } */
       $data =
         [
-          'nombre_producto'  => $nombre
+          'codigoBarras_producto'  => $codigoBarra,
+          'nombre_producto'  => $nombre,
+          'presentacion_id'  => $presentacion_id,
+          'laboratorio_id'  => $laboratorio_id,
+          'grupo_id'  => $grupo_id,
+          'principioActivo_id'  => $principioActivo_id,
+          'indicacion_id'  => $indicacion_id,
+          'concentracion_producto'  => $concentracion,
+          'dateCreation'  => now(),
+          'dateUpdate'          => now()
         ];
       if (!$id = productosModel::add(productosModel::$t1, $data)) {
         json_output(json_build(400, null, 'Hubo error al guardar el registro'));
@@ -641,6 +658,33 @@ class ajaxController extends Controller
       json_output(json_build(400, null, $e->getMessage()));
     }
   }
+
+  function get_products()
+  {
+    try {
+      /* debug(productosModel::all_paginated());
+      die; */
+      $data = get_module('listaProductos', productosModel::all_paginated());
+      json_output(json_build(200, $data));
+    } catch (Exception $e) {
+      json_output(json_build(400, $e->getMessage()));
+    }
+  }
+
+  function get_product_form()
+  {
+    try {
+      $id = clean($_POST['id']);
+      if (!$producto = productosModel::by_id($id)) {
+        throw new PDOException('El Laboratorio no existe en la base de datos.');
+      }
+
+      json_output(json_build(200, $producto));
+    } catch (PDOException $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    }
+  }
+
 
   function bee_get_movements()
   {

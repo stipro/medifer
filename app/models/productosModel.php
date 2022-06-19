@@ -6,9 +6,10 @@
  *
  * Modelo de productos
  */
-class productosModel extends Model {
+class productosModel extends Model
+{
   public static $t1   = 'productos'; // Nombre de la tabla en la base de datos;
-  
+
   // Nombre de tabla 2 que talvez tenga conexión con registros
   //public static $t2 = '__tabla 2___'; 
   //public static $t3 = '__tabla 3___'; 
@@ -17,7 +18,7 @@ class productosModel extends Model {
   {
     // Constructor general
   }
-  
+
   static function all()
   {
     // Todos los registros
@@ -28,7 +29,25 @@ class productosModel extends Model {
   static function all_paginated()
   {
     // Todos los registros
-    $sql = 'SELECT * FROM productos ORDER BY id_producto DESC';
+    $sql = 'SELECT
+    pd.id_producto,
+    pd.codigoBarras_producto,
+    pd.nombre_producto,
+    pd.concentracion_producto,
+    pt.nombre_presentacion,
+    lb.nombre_laboratorio,
+		gp.nombre_grupo,
+		pcAc.nombre_principioActivo,
+		ic.nombre_indicacion
+FROM
+    productos AS pd
+    LEFT JOIN presentaciones AS pt ON pd.presentacion_id = pt.id_presentacion
+    LEFT JOIN laboratorios AS lb ON pd.laboratorio_id = lb.id_laboratorio
+		LEFT JOIN grupos AS gp ON pd.grupo_id = gp.id_grupo
+		LEFT JOIN principiosactivo AS pcAc ON pd.principioActivo_id = pcAc.id_principioActivo
+		LEFT JOIN indicaciones AS ic ON pd.indicacion_id = ic.id_indicacion
+ORDER BY
+    id_producto DESC';
     return PaginationHandler::paginate($sql);
   }
 
@@ -39,4 +58,3 @@ class productosModel extends Model {
     return ($rows = parent::query($sql, ['id' => $id])) ? $rows[0] : [];
   }
 }
-

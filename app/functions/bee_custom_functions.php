@@ -34,7 +34,7 @@ function get_tipo_presentaciones()
   $select = array();
   $tipoPresentaciones = presentacionesModel::all();
   foreach ($tipoPresentaciones as $tpPresentaciones) {
-    $item = [$tpPresentaciones['nombre_presentacion']   , $tpPresentaciones['nombre_presentacion']];
+    $item = [$tpPresentaciones['nombre_presentacion'], $tpPresentaciones['id_presentacion'], $tpPresentaciones['nombre_presentacion']];
     array_push($select, $item);
   }
   return $select;
@@ -45,7 +45,7 @@ function get_tipo_laboratorios()
   $select = array();
   $tipoLaboratorios = laboratoriosModel::all();
   foreach ($tipoLaboratorios as $tpLaboratorios) {
-    $item = [$tpLaboratorios['nombre_laboratorio']   , $tpLaboratorios['nombre_laboratorio']];
+    $item = [$tpLaboratorios['nombre_laboratorio'], $tpLaboratorios['id_laboratorio'], $tpLaboratorios['nombre_laboratorio']];
     array_push($select, $item);
   }
   return $select;
@@ -56,7 +56,7 @@ function get_tipo_grupos()
   $select = array();
   $tipoGrupos = gruposModel::all();
   foreach ($tipoGrupos as $tpGrupos) {
-    $item = [$tpGrupos['nombre_grupo']   , $tpGrupos['nombre_grupo']];
+    $item = [$tpGrupos['nombre_grupo'], $tpGrupos['id_grupo'], $tpGrupos['nombre_grupo']];
     array_push($select, $item);
   }
   return $select;
@@ -67,7 +67,7 @@ function get_tipo_princiosActivo()
   $select = array();
   $tipoIndicacionesActivo = principioactivoModel::all();
   foreach ($tipoIndicacionesActivo as $tpIndicacionesActivo) {
-    $item = [$tpIndicacionesActivo['nombre_principioActivo']   , $tpIndicacionesActivo['nombre_principioActivo']];
+    $item = [$tpIndicacionesActivo['nombre_principioActivo'], $tpIndicacionesActivo['id_principioActivo'], $tpIndicacionesActivo['nombre_principioActivo']];
     array_push($select, $item);
   }
   return $select;
@@ -78,7 +78,7 @@ function get_tipo_indicaciones()
   $select = array();
   $tipoIndicaciones = indicacionesModel::all();
   foreach ($tipoIndicaciones as $tpIndicaciones) {
-    $item = [$tpIndicaciones['nombre_indicacion']   , $tpIndicaciones['nombre_indicacion']];
+    $item = [$tpIndicaciones['nombre_indicacion'], $tpIndicaciones['id_indicacion'], $tpIndicaciones['nombre_indicacion']];
     array_push($select, $item);
   }
   return $select;
