@@ -22,8 +22,9 @@ class comprasController extends Controller {
   {
     $data = 
     [
-      'title' => 'Reemplazar título',
-      'msg'   => 'Bienvenido al controlador de "compras", se ha creado con éxito si ves este mensaje.'
+      'title' => 'Compras',
+      'msg'   => 'Bienvenido al controlador de "compras", se ha creado con éxito si ves este mensaje.',
+      'padding' => '0px'
     ];
     
     // Descomentar vista si requerida

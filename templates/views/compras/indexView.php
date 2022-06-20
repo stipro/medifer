@@ -1,14 +1,19 @@
-<?php require_once INCLUDES.'inc_header.php'; ?>
-      <div class="container">
-        <div class="row">
-          <div class="col-6 text-center offset-xl-3">
-            <a href="<?php echo URL; ?>"><img src="<?php echo IMAGES.'bee_logo.png' ?>" alt="Bee framework" class="img-fluid" style="width: 200px;"></a>
-            <h2 class="mt-5 mb-3"><span class="text-warning">Bee</span> framework</h2>
-            <!-- contenido -->
-            <h1><?php echo $d->msg; ?></h1>
-            <!-- ends -->
-          </div>
-        </div>
+<?php require_once INCLUDES . 'inc_header.php'; ?>
+<?php require_once INCLUDES . 'inc_navbar.php'; ?>
+<div class="container py-3">
+  <div class="card">
+    <div class="card-header d-flex justify-content-between">
+      <h3 class="card-title">Lista de <?php echo $d->title; ?></h3>
+      <div>
+        <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#mdAdd-compras" id="btnAdd-compras">Agregar nuevo</button>
       </div>
-      
-      <?php require_once INCLUDES.'inc_footer.php'; ?>
+    </div>
+    <div class="card-body">
+      <div class="wrapper_compras table-responsive">
+
+      </div>
+    </div>
+  </div>
+</div>
+<?php require_once INCLUDES . 'inc_footer.php'; ?>
+<?php require_once VIEWS . 'compras/modals/create.php'; ?>

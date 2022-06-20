@@ -5,7 +5,7 @@
     <div class="card-header d-flex justify-content-between">
       <h3 class="card-title">Lista de <?php echo $d->title; ?></h3>
       <div>
-        <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#mdAdd-lots" id="add-lots">Agregar nuevo</button>
+        <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#mdAdd-lots" id="btnAdd-lots">Agregar nuevo</button>
       </div>
     </div>
     <div class="card-body">
@@ -16,3 +16,4 @@
   </div>
 </div>
 <?php require_once INCLUDES . 'inc_footer.php'; ?>
+<?php require_once VIEWS . 'lotes/modals/create.php'; ?>

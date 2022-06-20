@@ -22,8 +22,9 @@ class posController extends Controller {
   {
     $data = 
     [
-      'title' => 'Reemplazar título',
-      'msg'   => 'Bienvenido al controlador de "pos", se ha creado con éxito si ves este mensaje.'
+      'title' => 'Pos',
+      'msg'   => 'Bienvenido al controlador de "pos", se ha creado con éxito si ves este mensaje.',
+      'padding' => '0px'
     ];
     
     // Descomentar vista si requerida
