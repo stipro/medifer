@@ -46,7 +46,7 @@ $(document).ready(function () {
     * PRESENTACION
     */
 
-  function select2All() {
+  function select2ProdutAll() {
     $('#insertIpt-presentation-product, #insertIpt-laboratory-product, #insertIpt-group-product, #insertIpt-activePrinciple-product, #insertIpt-indication-product').select2({
       theme: 'bootstrap-5',
       dropdownParent: $('#mdAdd-product'),
@@ -63,7 +63,7 @@ $(document).ready(function () {
     });
   }
 
-  select2All();
+  select2ProdutAll();
   // Agregar un presentacion
   $('#add_presentation_form').on('submit', add_presentation_form);
   function add_presentation_form(e) {
@@ -1572,7 +1572,7 @@ $(document).ready(function () {
     })
   }
 
-  // Borrar una Indicación [BORRAR]
+  // Borrar una producto [BORRAR]
   $('body').on('click', '.btnDelete_product', btnDelete_product);
   function btnDelete_product(e) {
     var boton = $(this),
@@ -1607,6 +1607,21 @@ $(document).ready(function () {
     })
   }
 
+  $(document).ready(function () {
+    $('#detail-shopping').DataTable();
+  });
+
+  function select2compraAll() {
+    $('#insertIpt-provider-shopping, #insertIpt-product-shopping, #insertIpt-lot-shopping').select2({
+      theme: 'bootstrap-5',
+      dropdownParent: $('#mdAdd-shopping'),
+      width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+      placeholder: $(this).data('placeholder'),
+      allowClear: true
+    });
+  }
+
+  select2compraAll();
   // Cargar movimientos
   bee_get_movements();
   function bee_get_movements() {

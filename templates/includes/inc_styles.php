@@ -9,16 +9,20 @@
 <script src="https://kit.fontawesome.com/aeb246fa89.js" crossorigin="anonymous"></script>
 <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"> -->
 
+<!-- Datatable css -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
+
 <!-- Todo plugin debe ir debajo de está línea -->
 <!-- Toastr css -->
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
 <!-- Waitme css -->
-<link rel="stylesheet" href="<?php echo PLUGINS.'waitme/waitMe.min.css'; ?>">
+<link rel="stylesheet" href="<?php echo PLUGINS . 'waitme/waitMe.min.css'; ?>">
 
 <!-- Lightbox -->
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css"/> -->
-<link rel="stylesheet" href="./assets/css/lightbox.min.css"/>
+<link rel="stylesheet" href="./assets/css/lightbox.min.css" />
 
 <!-- Estilos en header deben ir debajo de esta línea -->
 <style>
@@ -28,4 +32,4 @@
 <?php echo load_styles(); ?>
 
 <!-- Estilos personalizados deben ir en main.css o abajo de esta línea -->
-<link rel="stylesheet" href="<?php echo CSS.'main.css?v='.get_version(); ?>">
+<link rel="stylesheet" href="<?php echo CSS . 'main.css?v=' . get_version(); ?>">
