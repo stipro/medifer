@@ -42,7 +42,13 @@
                                 <div class="input-group input-group-sm">
                                     <select class="form-select form-select-sm" name="provider-shopping" id="insertIpt-provider-shopping" data-placeholder="Escribe para buscar...">
                                         <option></option>
-                                        <option value="WY">Wyoming</option>
+                                        <?php if (empty(get_lista_presentaciones())) : ?>
+                                            <option value="--0--">--No se obtuvo información--</option>
+                                        <?php else : ?>
+                                            <?php foreach (get_lista_presentaciones() as $tipo) : ?>
+                                                <?php echo sprintf('<option value="%s" data-id="%s">%s</option>', $tipo[0], $tipo[1], $tipo[2]); ?>
+                                            <?php endforeach; ?>
+                                        <?php endif; ?>
                                     </select>
                                     <button class="btn btn-outline-secondary form-control-sm" type="button" id="btnUpdate-provider-shopping"><i class="bi bi-arrow-clockwise"></i></button>
                                     <a class="btn btn-outline-secondary form-control-sm" href="./proveedores" role="button" id="mbtnAdd-provider-shopping" target="_blank"><i class="bi bi-plus-lg"></i></a>
@@ -52,7 +58,7 @@
                         <div class="col-sm-2">
                             <div class="form-group">
                                 <label for="lot_product" class="control-label">Fecha de compra<span class="text-danger">*</span></label>
-                                <input type="date" name="description_product" id="description_product" class="form-control form-control-sm input-group-sm" aria-label="description_product" value="" placeholder="Escribe para buscar..." autofocus required autocomplete="off">
+                                <input type="date" name="description_product" id="description_product" class="form-control form-control-sm input-group-sm" aria-label="description_product" value="<?php echo date('Y-m-d'); ?>" placeholder="Escribe para buscar..." autofocus required autocomplete="off">
                             </div>
                         </div>
                     </div>
@@ -69,7 +75,13 @@
                                 <div class="input-group input-group-sm">
                                     <select class="form-select form-select-sm" name="product-shopping" id="insertIpt-product-shopping" data-placeholder="Escribe para buscar...">
                                         <option></option>
-                                        <option value="WY">Wyoming</option>
+                                        <?php if (empty(get_tipo_productos())) : ?>
+                                            <option value="--0--">--No se obtuvo información--</option>
+                                        <?php else : ?>
+                                            <?php foreach (get_tipo_productos() as $tipo) : ?>
+                                                <?php echo sprintf('<option value="%s" data-id="%s">%s</option>', $tipo[0], $tipo[1], $tipo[2]); ?>
+                                            <?php endforeach; ?>
+                                        <?php endif; ?>
                                     </select>
                                     <button class="btn btn-outline-secondary form-control-sm" type="button" id="btnUpdate-product-shopping"><i class="bi bi-arrow-clockwise"></i></button>
                                     <a class="btn btn-outline-secondary form-control-sm" href="./productos" role="button" id="mbtnAdd-product-shopping" target="_blank"><i class="bi bi-plus-lg"></i></a>
@@ -160,7 +172,7 @@
                                     <td>@mdo</td>
                                     <td>Otto</td>
                                     <td>@mdo</td>
-                                    
+
                                 </tr>
                                 <tr>
                                     <th scope="row">2</th>

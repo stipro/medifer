@@ -1607,19 +1607,9 @@ $(document).ready(function () {
     })
   }
 
-  $(document).ready(function () {
-    $('#detail-shopping').DataTable();
-  });
 
-  function select2compraAll() {
-    $('#insertIpt-provider-shopping, #insertIpt-product-shopping, #insertIpt-lot-shopping').select2({
-      theme: 'bootstrap-5',
-      dropdownParent: $('#mdAdd-shopping'),
-      width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-      placeholder: $(this).data('placeholder'),
-      allowClear: true
-    });
-  }
+
+
   function select2UserAll() {
     $('#insertSlt-collaborator-user, #insertSlt-userLevel-user').select2({
       theme: 'bootstrap-5',
@@ -1886,6 +1876,18 @@ $(document).ready(function () {
       $('body').waitMe('hide');
     })
   }
+
+  function select2compraAll() {
+    $('#insertIpt-provider-shopping, #insertIpt-product-shopping, #insertIpt-lot-shopping').select2({
+      theme: 'bootstrap-5',
+      dropdownParent: $('#mdAdd-shopping'),
+      width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+      placeholder: $(this).data('placeholder'),
+      allowClear: true
+    });
+  }
+  select2compraAll();
+  $('#detail-shopping').DataTable();
 
   // Cargar movimientos
   bee_get_movements();

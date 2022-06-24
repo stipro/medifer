@@ -66,8 +66,8 @@ function get_tipo_princiosActivo()
 {
   $select = array();
   $tipoIndicacionesActivo = principioactivoModel::all();
-  foreach ($tipoIndicacionesActivo as $tpIndicacionesActivo) {
-    $item = [$tpIndicacionesActivo['nombre_principioActivo'], $tpIndicacionesActivo['id_principioActivo'], $tpIndicacionesActivo['nombre_principioActivo']];
+  foreach ($tipoIndicacionesActivo as $tpPrincipioActivo) {
+    $item = [$tpPrincipioActivo['nombre_principioActivo'], $tpPrincipioActivo['id_principioActivo'], $tpPrincipioActivo['nombre_principioActivo']];
     array_push($select, $item);
   }
   return $select;
@@ -79,6 +79,32 @@ function get_tipo_indicaciones()
   $tipoIndicaciones = indicacionesModel::all();
   foreach ($tipoIndicaciones as $tpIndicaciones) {
     $item = [$tpIndicaciones['nombre_indicacion'], $tpIndicaciones['id_indicacion'], $tpIndicaciones['nombre_indicacion']];
+    array_push($select, $item);
+  }
+  return $select;
+}
+
+function get_tipo_productos()
+{
+  /*  debug(presentacionesModel::all_paginated());
+    die; */
+  $select = array();
+  $tipoProductos = productosModel::all();
+  foreach ($tipoProductos as $tpProductos) {
+    $item = [$tpProductos['nombre_producto'], $tpProductos['id_producto'], $tpProductos['nombre_producto']];
+    array_push($select, $item);
+  }
+  return $select;
+}
+
+function get_lista_presentaciones()
+{
+  /*  debug(presentacionesModel::all_paginated());
+    die; */
+  $select = array();
+  $tipoProveedores = proveedoresModel::all();
+  foreach ($tipoProveedores as $tpProveedores) {
+    $item = [$tpProveedores['nombre_proveedor'], $tpProveedores['id_proveedor'], $tpProveedores['nombre_proveedor']];
     array_push($select, $item);
   }
   return $select;
