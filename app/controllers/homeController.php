@@ -19,7 +19,7 @@ class homeController extends Controller {
       'padding' => '0px'
     ];
 
-    View::render('inicio', $data);
+    View::render('bee', $data);
     /* View::render('inicio', $data); */
   }
 

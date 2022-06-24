@@ -620,14 +620,14 @@ class ajaxController extends Controller
   {
     try {
       $codigoBarra = clean($_POST['barCode_product']);
-      $nombre = clean($_POST['name_product']);      
+      $nombre = clean($_POST['name_product']);
       $presentacion_id = clean($_POST['presentation_id']);
       $laboratorio_id = clean($_POST['laboratory_id']);
       $grupo_id = clean($_POST['group_id']);
       $principioActivo_id = clean($_POST['activePrinciple_id']);
       $indicacion_id = clean($_POST['indication_id']);
       $concentracion = clean($_POST['concentration-product']);
-      
+
 
       /* if(strlen($nombre) < 2){
         json_output(json_build(400, null, 'El nombre es corto'));
@@ -724,6 +724,132 @@ class ajaxController extends Controller
       }
 
       if (!productosModel::remove(productosModel::$t1, ['id_producto' => $id_producto], 1)) {
+        json_output(json_build(400, null, 'Hubo un error al borrar la indicación.'));
+      }
+
+      json_output(json_build(200, null, 'indicación borrada con éxito.'));
+    } catch (Exception $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    } catch (PDOException $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    }
+  }
+
+  /**
+   * PROVEEDORES
+   */
+  function get_providers()
+  {
+    try {
+      /* debug(proveedoresModel::all_paginated());
+      die; */
+      $data = get_module('listaProveedores', proveedoresModel::all_paginated());
+      json_output(json_build(200, $data));
+    } catch (Exception $e) {
+      json_output(json_build(400, $e->getMessage()));
+    }
+  }
+
+  function add_provider_form()
+  {
+    try {
+      $nombre_proveedor = clean($_POST['name-provider']);
+      $numeroDocumento_proveedor = clean($_POST['documentNumber-provider']);
+      $celular_proveedor = clean($_POST['numberPhone-provider']);
+      $correo_proveedor = clean($_POST['email-provider']);
+      $saldoInicial_proveedor = clean($_POST['residueInitial-provider']);
+      $estado_proveedor = clean($_POST['state_provider']);
+
+
+
+      /* if(strlen($nombre) < 2){
+        json_output(json_build(400, null, 'El nombre es corto'));
+      } */
+      $data =
+        [
+          'nombre_proveedor'  => $nombre_proveedor,
+          'numeroDocumento_proveedor'  => $numeroDocumento_proveedor,
+          'celular_proveedor'  => $celular_proveedor,
+          'correoElectronivo_proveedor'  => $correo_proveedor,
+          'saldoInicial_proveedor'  => $saldoInicial_proveedor,
+          'estado_proveedor'  => $estado_proveedor,
+          'dateCreation_proveedor'  => now(),
+          'dateUpdate_proveedor'          => now()
+        ];
+      if (!$id = proveedoresModel::add(proveedoresModel::$t1, $data)) {
+        json_output(json_build(400, null, 'Hubo error al guardar el registro'));
+      }
+
+      // se guardó con éxito
+      $productos = proveedoresModel::by_id($id);
+      json_output(json_build(201, $productos, 'Producto agregado con exito. '));
+    } catch (Exception $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    } catch (PDOException $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    }
+  }
+
+  function get_provider_form()
+  {
+    try {
+      $id = clean($_POST['id']);
+      if (!$proveedor = proveedoresModel::by_id($id)) {
+        throw new proveedoresModel('El Proveedor no existe en la base de datos.');
+      }
+
+      json_output(json_build(200, $proveedor));
+    } catch (PDOException $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    }
+  }
+
+  function update_provider_form()
+  {
+    try {
+      $id          = (int) $_POST['id']; // id lección
+      $nombre_proveedor      = clean($_POST['name-provider']);
+      $numeroDocumento_proveedor      = clean($_POST['documentNumber-provider']);
+      $celular_proveedor      = clean($_POST['numberPhone-provider']);
+      $correo_proveedor      = clean($_POST['email-provider']);
+      $saldoInicial_proveedor      = clean($_POST['residueInitial-provider']);
+      $estado_proveedor      = clean($_POST['state_provider']);
+      $data =
+        [
+          'nombre_proveedor'  => $nombre_proveedor,
+          'numeroDocumento_proveedor'  => $numeroDocumento_proveedor,
+          'celular_proveedor'  => $celular_proveedor,
+          'correoElectronivo_proveedor'  => $correo_proveedor,
+          'saldoInicial_proveedor'  => $saldoInicial_proveedor,
+          'estado_proveedor'  => $estado_proveedor,
+          'dateUpdate_proveedor'          => now()
+        ];
+
+      if (!proveedoresModel::update(proveedoresModel::$t1, ['id_proveedor' => $id], $data)) {
+        json_output(json_build(400, null, 'Hubo un error al actualizar la indicación.'));
+      }
+
+      // se guardó con éxito
+      $proveedor = proveedoresModel::by_id($id);
+      json_output(json_build(200, $proveedor, 'proveedor actualizada con éxito.'));
+    } catch (Exception $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    } catch (PDOException $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    }
+  }
+
+  function delete_provider()
+  {
+    try {
+      $id = clean($_POST['id']);
+
+      // Validar que exista la presentación
+      if (!$proveedor = proveedoresModel::by_id($id)) {
+        throw new Exception('No existe la Proveedor en la base de datos.');
+      }
+
+      if (!proveedoresModel::remove(proveedoresModel::$t1, ['id_proveedor' => $id], 1)) {
         json_output(json_build(400, null, 'Hubo un error al borrar la indicación.'));
       }
 

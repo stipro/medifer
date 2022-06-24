@@ -1630,6 +1630,263 @@ $(document).ready(function () {
     });
   }
   select2UserAll();
+
+  get_providers();
+
+  function get_providers() {
+    var wrapper = $('.wrapper_providers'),
+      hook = 'bee_hook',
+      action = 'get';
+
+    if (wrapper.length === 0) {
+      return;
+    }
+
+    $.ajax({
+      url: 'ajax/get_providers',
+      type: 'POST',
+      dataType: 'json',
+      cache: false,
+      data: {
+        hook, action
+      },
+      beforeSend: function () {
+        wrapper.waitMe();
+      }
+    }).done(function (res) {
+      if (res.status === 200) {
+        wrapper.html(res.data);
+        //select2All();
+      } else {
+        toastr.error(res.msg, '¡Upss!');
+        wrapper.html(res.msg);
+      }
+    }).fail(function (err) {
+      toastr.error('Hubo un error en la petición', '¡Upss!');
+      wrapper.html('Hubo un error al cargar los proveedores, intenta más tarde.');
+    }).always(function () {
+      wrapper.waitMe('hide');
+    })
+  }
+
+  // Agregar un proveedor
+  $('#add_provider_form').on('submit', add_provider_form);
+  function add_provider_form(e) {
+    e.preventDefault();
+    let val_state_provider;
+    if ($('#insertCb-state-provider').prop('checked')) {
+      val_state_provider = 1;
+    }
+    else {
+      val_state_provider = 0;
+    }
+
+    let form = $(this), data = new FormData(form.get(0));
+
+    data.append("state_provider", JSON.stringify(val_state_provider));
+
+    // AJAX
+    $.ajax({
+      url: 'ajax/add_provider_form',
+      type: 'post',
+      dataType: 'json',
+      contentType: false,
+      processData: false,
+      cache: false,
+      data: data,
+      beforeSend: function () {
+        form.waitMe();
+      }
+    }).done(function (res) {
+      if (res.status === 201) {
+        toastr.success(res.msg, '¡Bien!');
+        /* form.trigger('reset'); */
+        get_providers();
+      } else {
+        toastr.error(res.msg, '¡Upss!');
+      }
+    }).fail(function (err) {
+      toastr.error('Hubo un error en la petición', '¡Upss!');
+    }).always(function () {
+      form.waitMe('hide');
+    })
+  }
+
+  // Cargar información de provedor [VISTA]
+  $('body').on('click', '.btnView_provider', btnView_provider);
+  function btnView_provider(e) {
+    e.preventDefault();
+
+    var button = $(this),
+      id = button.data('id'),
+      action = 'get',
+      hook = 'bee_hook',
+      form_e = $('#view_provider_form');
+
+    // Cargar la información del registro de la lección
+    $.ajax({
+      url: 'ajax/get_provider_form',
+      type: 'POST',
+      dataType: 'json',
+      cache: false,
+      data: {
+        hook, action, id
+      },
+      beforeSend: function () {
+        $('.view_provider_form').waitMe();
+      }
+    }).done(function (res) {
+      if (res.status === 200) {
+        let nombre_proveedor = res.data.nombre_proveedor ? res.data.nombre_proveedor : '-';
+        $('[name="name-provider"]', form_e).val(nombre_proveedor);
+        let numeroDocumento_proveedor = res.data.numeroDocumento_proveedor ? res.data.numeroDocumento_proveedor : '-';
+        $('[name="documentNumber-provider"]', form_e).val(numeroDocumento_proveedor);
+        let celular_proveedor = res.data.celular_proveedor ? res.data.celular_proveedor : '-';
+        $('[name="numberPhone-provider"]', form_e).val(celular_proveedor);
+        let correoElectronivo_proveedor = res.data.correoElectronivo_proveedor ? res.data.correoElectronivo_proveedor : '-';
+        $('[name="email-provider"]', form_e).val(correoElectronivo_proveedor);
+        let saldoInicial_proveedor = res.data.saldoInicial_proveedor ? res.data.saldoInicial_proveedor : '-';
+        $('[name="residueInitial-provider"]', form_e).val(saldoInicial_proveedor);
+
+        res.data.estado_proveedor === 1 ? $('#viewCb-state-provider').prop("checked", true) : $('#viewCb-state-provider').prop("checked", false);
+
+      } else {
+        toastr.error(res.msg, '¡Upss!');
+      }
+    }).fail(function (err) {
+      toastr.error('Hubo un error en la petición', '¡Upss!');
+    }).always(function () {
+      $('.view_provider_form').waitMe('hide');
+    })
+  }
+
+  // Cargar información de proveedor [EDITAR]
+  $('body').on('click', '.btnEdit_provider', btnEdit_provider);
+  function btnEdit_provider(e) {
+    e.preventDefault();
+
+    var button = $(this),
+      id = button.data('id'),
+      action = 'get',
+      hook = 'bee_hook',
+      form_e = $('#edit_provider_form');
+
+    // Cargar la información del registro de la indicación
+    $.ajax({
+      url: 'ajax/get_provider_form',
+      type: 'POST',
+      dataType: 'json',
+      cache: false,
+      data: {
+        hook, action, id
+      },
+      beforeSend: function () {
+        $('.edit_provider_form').waitMe();
+      }
+    }).done(function (res) {
+      if (res.status === 200) {
+        $('[name="id"]', form_e).val(res.data.id_proveedor);
+        let nombre_proveedor = res.data.nombre_proveedor ? res.data.nombre_proveedor : '-';
+        $('[name="name-provider"]', form_e).val(nombre_proveedor);
+        let numeroDocumento_proveedor = res.data.numeroDocumento_proveedor ? res.data.numeroDocumento_proveedor : '-';
+        $('[name="documentNumber-provider"]', form_e).val(numeroDocumento_proveedor);
+        let celular_proveedor = res.data.celular_proveedor ? res.data.celular_proveedor : '-';
+        $('[name="numberPhone-provider"]', form_e).val(celular_proveedor);
+        let correoElectronivo_proveedor = res.data.correoElectronivo_proveedor ? res.data.correoElectronivo_proveedor : '-';
+        $('[name="email-provider"]', form_e).val(correoElectronivo_proveedor);
+        let saldoInicial_proveedor = res.data.saldoInicial_proveedor ? res.data.saldoInicial_proveedor : '-';
+        $('[name="residueInitial-provider"]', form_e).val(saldoInicial_proveedor);
+
+        res.data.estado_proveedor == 1 ? $("#editCb-state-provider").prop("checked", true) : $("#editCb-state-provider").prop("checked", false);
+
+      } else {
+        toastr.error(res.msg, '¡Upss!');
+      }
+    }).fail(function (err) {
+      toastr.error('Hubo un error en la petición', '¡Upss!');
+    }).always(function () {
+      $('.edit_provider_form').waitMe('hide');
+    })
+  }
+
+  // Guardar cambios de producto
+  $('#edit_provider_form').on('submit', edit_provider_form);
+  function edit_provider_form(e) {
+    e.preventDefault();
+    let val_state_provider;
+    if ($('#editCb-state-provider').prop('checked')) {
+      val_state_provider = 1;
+    }
+    else {
+      val_state_provider = 0;
+    }
+
+    let form = $(this), data = new FormData(form.get(0));
+
+    data.append("state_provider", JSON.stringify(val_state_provider));
+
+    // AJAX
+    $.ajax({
+      url: 'ajax/update_provider_form',
+      type: 'post',
+      dataType: 'json',
+      contentType: false,
+      processData: false,
+      cache: false,
+      data: data,
+      beforeSend: function () {
+        form.waitMe();
+      }
+    }).done(function (res) {
+      if (res.status === 200) {
+        toastr.success(res.msg, '¡Bien!');
+        get_providers();
+        //form.trigger('reset');
+      } else {
+        toastr.error(res.msg, '¡Upss!');
+      }
+    }).fail(function (err) {
+      toastr.error('Hubo un error en la petición', '¡Upss!');
+    }).always(function () {
+      form.waitMe('hide');
+    })
+  }
+
+  // Borrar una producto [BORRAR]
+  $('body').on('click', '.btnDelete_provider', btnDelete_provider);
+  function btnDelete_provider(e) {
+    var boton = $(this),
+      id = boton.data('id'),
+      hook = 'bee_hook',
+      action = 'delete';
+
+    if (!confirm('¿Estás seguro?')) return false;
+
+    $.ajax({
+      url: 'ajax/delete_provider',
+      type: 'POST',
+      dataType: 'json',
+      cache: false,
+      data: {
+        hook, action, id
+      },
+      beforeSend: function () {
+        $('body').waitMe();
+      }
+    }).done(function (res) {
+      if (res.status === 200) {
+        toastr.success(res.msg, '¡Bien!');
+        get_providers();
+      } else {
+        toastr.error(res.msg, '¡Upss!');
+      }
+    }).fail(function (err) {
+      toastr.error('Hubo un error en la petición', '¡Upss!');
+    }).always(function () {
+      $('body').waitMe('hide');
+    })
+  }
+
   // Cargar movimientos
   bee_get_movements();
   function bee_get_movements() {
