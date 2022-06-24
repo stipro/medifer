@@ -22,8 +22,9 @@ class usuariosController extends Controller {
   {
     $data = 
     [
-      'title' => 'Reemplazar título',
-      'msg'   => 'Bienvenido al controlador de "usuarios", se ha creado con éxito si ves este mensaje.'
+      'title' => 'Usuarios',
+      'msg'   => 'Bienvenido al controlador de "usuarios", se ha creado con éxito si ves este mensaje.',
+      'padding' => '0px'
     ];
     
     // Descomentar vista si requerida

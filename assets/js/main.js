@@ -1620,8 +1620,16 @@ $(document).ready(function () {
       allowClear: true
     });
   }
-
-  select2compraAll();
+  function select2UserAll() {
+    $('#insertSlt-collaborator-user, #insertSlt-userLevel-user').select2({
+      theme: 'bootstrap-5',
+      dropdownParent: $('#mdAdd-user'),
+      width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+      placeholder: $(this).data('placeholder'),
+      allowClear: true
+    });
+  }
+  select2UserAll();
   // Cargar movimientos
   bee_get_movements();
   function bee_get_movements() {
